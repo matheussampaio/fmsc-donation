@@ -5,6 +5,7 @@ const runSequence = require('run-sequence');
 const plugins = require('gulp-load-plugins')({
   lazy: true
 });
+const browserSync = require('browser-sync').create();
 
 const config = {
   appName: 'fmsc'
@@ -17,7 +18,8 @@ gulp.task('build:clean', () => {
 gulp.task('build:fonts', () => {
   return gulp.src('app/assets/fonts/**/*.*')
     .pipe(plugins.plumber())
-    .pipe(gulp.dest('www/assets/fonts/'));
+    .pipe(gulp.dest('www/assets/fonts/'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('build:images', () => {
@@ -25,7 +27,8 @@ gulp.task('build:images', () => {
       cwd: 'app/assets/images/'
     })
     .pipe(plugins.plumber())
-    .pipe(gulp.dest('www/assets/images/'));
+    .pipe(gulp.dest('www/assets/images/'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('build:templates', () => {
@@ -36,7 +39,8 @@ gulp.task('build:templates', () => {
     .pipe(plugins.angularTemplatecache('templates.js', {
       module: config.appName
     }))
-    .pipe(gulp.dest('www/app/'));
+    .pipe(gulp.dest('www/app/'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('build:vendor', () => {
@@ -44,7 +48,8 @@ gulp.task('build:vendor', () => {
 
   return gulp.src(vendorFiles)
     .pipe(plugins.plumber())
-    .pipe(gulp.dest('www/vendor/'));
+    .pipe(gulp.dest('www/vendor/'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('build:lint', () => {
@@ -66,15 +71,12 @@ gulp.task('build:js', () => {
       cwd: 'app/'
     })
     .pipe(plugins.plumber())
-    .pipe(plugins.sourcemaps.init())
-      .pipe(plugins.babel({
-        presets: ['es2015']
-      }))
-      .pipe(plugins.ngAnnotate())
-      .pipe(plugins.concat('app.js'))
-      .pipe(plugins.uglify())
-    .pipe(plugins.sourcemaps.write('../maps'))
-    .pipe(gulp.dest('www/app'));
+    .pipe(plugins.babel({
+      presets: ['es2015']
+    }))
+    .pipe(plugins.ngAnnotate())
+    .pipe(gulp.dest('www/app'))
+    .pipe(browserSync.stream({match: '**/*.js'}));
 });
 
 gulp.task('build:js:server', () => {
@@ -106,7 +108,8 @@ gulp.task('build:scss', () => {
     }))
     .pipe(plugins.autoprefixer('last 1 Chrome version', 'last 3 iOS versions', 'last 3 Android versions'))
     .pipe(plugins.concat(config.appName + '.css'))
-    .pipe(gulp.dest(path.join('www/assets/css/')));
+    .pipe(gulp.dest(path.join('www/assets/css/')))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('build:inject', () => {
@@ -157,33 +160,40 @@ gulp.task('build:inject', () => {
     }), 'vendor'))
     // inject app.js
     .pipe(_inject(scriptStream, 'app'))
-    .pipe(gulp.dest('www/'));
+    .pipe(gulp.dest('www/'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('debug', ['build'], () => {
   // SCSS
-  gulp.watch('app/**/*.scss', ['build:scss']);
+  gulp.watch('**/*.scss', { cwd: 'app' }, ['build:scss']);
 
   // Fonts
-  gulp.watch('app/assets/fonts/**', ['build:fonts']);
+  gulp.watch('assets/fonts/**', { cwd: 'app' }, ['build:fonts']);
 
   // Images
-  gulp.watch('app/assets/images/**', ['build:images']);
+  gulp.watch('assets/images/**', { cwd: 'app' }, ['build:images']);
 
   // Javascript Web
-  gulp.watch('app/**/*.js', ['build:js', 'build:lint']);
+  gulp.watch('**/*.js', { cwd: 'app' }, ['build:js', 'build:lint']);
 
   // Javascript Server
-  gulp.watch('server/**/*.js', ['build:js:server', 'build:lint']);
+  gulp.watch('**/*.js', { cwd: 'server' }, ['build:js:server', 'build:lint']);
 
   // Vendors
   gulp.watch('./vendor.json', ['build:vendor']);
 
   // Templates
-  gulp.watch(['app/**/*.html', '!app/index.html'], ['build:templates']);
+  gulp.watch(['**/*.html', '!index.html'], { cwd: 'app' }, ['build:templates']);
 
   // index.html
   gulp.watch('app/index.html', ['build:inject']);
+});
+
+gulp.task('serve', ['debug'], () => {
+  browserSync.init({
+    server: './www'
+  });
 });
 
 gulp.task('build', (done) => {
