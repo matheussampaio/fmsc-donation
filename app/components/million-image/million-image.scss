@@ -1,0 +1,21 @@
+table {
+  background: url('../../assets/images/image.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+table, th, td {
+  border: 0px solid black;
+  border-collapse: collapse;
+}
+
+td {
+  width: 5px;
+  height: 5px;
+  padding: 0px;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.bought {
+  background-color: rgba(48, 48, 48, 0);
+}
