@@ -2,39 +2,36 @@
 
   angular
     .module('fmsc')
-    .directive('millionImage', millionImageDirective);
-
-  function millionImageDirective() {
-    return {
+    .component('millionImage', {
       controller: millionImageController,
       templateUrl: 'million-image/million-image.html',
-      link: ($scope, $elem) => {
-        const con = $elem[0].children[1].getContext('2d');
+    });
 
-        let imgData = con.getImageData(0, 0, 500, 500);
+    function millionImageController($log) {
+      const vm = this;
 
-        console.log((500 + (500 * imgData.width)) * 4);
+      vm.width = [];
+      vm.height = [];
+      vm.meals = [];
+      vm.isBought = isBought;
 
-        for (let row = 0; row < 500; row++) {
-          for (let col = 0; col < 500; col++) {
-            let index = (col + (row * imgData.width)) * 4;
+      activate();
 
-            if (bits.includes(index)) {
-              console.log(index);
-              imgData.data[index] = 255;
-              imgData.data[index + 1] = 0;
-              imgData.data[index + 2] = 0;
-              imgData.data[index + 3] = 255;
-            }
+      function activate() {
+        for (let i = 0; i < 250; i++) {
+          vm.width.push(i);
+          vm.height.push(i);
+          vm.meals.push([]);
+          for (let j = 0; j < 250; j++) {
+            var rand = Math.random();
+            vm.meals[i].push({ bought: rand < 0.25 });
           }
         }
+      }
 
-        con.putImageData(imgData, 0, 0);
+      function isBought(row, col) {
+        return vm.meals[row][col].bought;
       }
     }
-  }
-
-  function millionImageController($log) {
-  }
 
 })();

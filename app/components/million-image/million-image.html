@@ -1,3 +1,9 @@
-<img src="assets/images/image.jpg" width="500" height="500">
+<!-- <img src="assets/images/image.jpg" width="500" height="500"> -->
 
-<canvas id="canvas" width="500" height="500"></canvas>;
+<table>
+  <tr ng-repeat="row in $ctrl.height">
+    <td ng-repeat="col in $ctrl.width" ng-class="{ bought: $ctrl.isBought(row, col) }">
+
+    </td>
+  </tr>
+</table>
