@@ -34,16 +34,10 @@
           vm.bought[`${row}x${col}`] = Math.random();
         });
       });
-
-      // vm.bought = {
-      //   '10x10': true,
-      //   '20x20': true
-      // };
     }
 
     function isBought(row, col) {
       return vm.bought[`${row}x${col}`] < 0.75;
-      // return (Math.random() < 0.25);
     }
 
   }
