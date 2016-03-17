@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
   /**
    * Lodash wrapper module.
@@ -19,7 +19,7 @@
     * @memberof Lodash
     */
   function Lodash($window) {
-      return $window._;
+    return $window._;
   }
 
 })();

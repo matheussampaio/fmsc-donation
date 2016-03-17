@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
   angular.module('fmsc')
     .config(fmscConfig);
@@ -13,7 +13,7 @@
       url: '/',
       controller: 'AppController as appCtrl',
       templateUrl: 'app/app.html'
-    }
+    };
 
     $stateProvider
       .state('app', appState);

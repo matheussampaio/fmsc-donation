@@ -5,11 +5,12 @@ const runSequence = require('run-sequence');
 const plugins = require('gulp-load-plugins')({
   lazy: true
 });
-const browserSync = require('browser-sync').create();
 
 const config = {
   appName: 'fmsc'
 };
+
+const browserSync = require('browser-sync').create(config.appName);
 
 gulp.task('build:clean', () => {
   return del(['www/**/*', '!www/.gitkeep']);
