@@ -17,7 +17,7 @@
     "jquery": "2.2.2",
     "lodash": "4.6.1",
     "method-override": "2.3.5",
-    "mongoose": "4.4.7",
+    "mongoose": "4.4.8",
     "mongoose-deep-populate": "3.0.0",
     "mongoose-random": "0.1.1",
     "morgan": "1.7.0",
