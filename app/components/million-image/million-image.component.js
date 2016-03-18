@@ -20,11 +20,20 @@
       activate();
 
       function activate() {
-        for (let i = 0; i < 250; i++) {
+        var maxRows = 160;
+        var maxCols = 250;
+
+        for (let i = 0; i < maxRows; i++) {
           vm.rows.push(i);
+        }
+
+        for (let i = 0; i < maxCols; i++) {
           vm.cols.push(i);
+        }
+
+        for (let i = 0; i < maxRows; i++) {
           vm.meals.push([]);
-          for (let j = 0; j < 250; j++) {
+          for (let j = 0; j < maxCols; j++) {
             var rand = Math.random();
             vm.meals[i].push({
               bought: rand < 0.25,

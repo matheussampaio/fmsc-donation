@@ -1,17 +1,18 @@
-table {
-  background: url('../../assets/images/image.jpg');
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
 table, th, td {
   border: none;
   border-collapse: collapse;
 }
 
+table {
+  background: url('../../assets/images/image.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border: 1px solid black;
+}
+
 td {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   padding: 0px;
   margin: 0px;
   background-color: rgba(255, 0, 0, 1);
