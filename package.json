@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "angular": "1.5.1",
-    "angular-resource": "1.5.1",
+    "angular-resource": "1.5.2",
     "angular-ui-router": "0.2.18",
     "body-parser": "1.15.0",
     "bootstrap": "4.0.0-alpha.2",
