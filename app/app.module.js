@@ -3,8 +3,7 @@
 
   angular.module('fmsc', [
     'ui.router',
-    'ngResource',
-    'ngStorage',
+    'firebase',
     'Lodash'
   ]);
 

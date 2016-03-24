@@ -1,7 +1,18 @@
 (function () {
 
   angular.module('fmsc')
+    .run(fmscRun)
     .config(fmscConfig);
+
+  function fmscRun($rootScope, $state) {
+    $rootScope.$on('$stateChangeStart', (event, toState, toParams) => {
+      if (toState.auth && !$rootScope.user) {
+        event.preventDefault();
+        $state.go('app.signin');
+      }
+    });
+  }
+
 
   function fmscConfig($stateProvider, $urlRouterProvider) {
     // Ionic uses AngularUI Router which uses the concept of states
@@ -11,8 +22,7 @@
 
     const appState = {
       url: '/',
-      controller: 'AppController as appCtrl',
-      templateUrl: 'app/app.html'
+      template: '<app></app>'
     };
 
     const homeState = {
@@ -37,7 +47,8 @@
 
     const donateState = {
       url: 'donate',
-      template: '<donate></donate>'
+      template: '<donate></donate>',
+      auth: true
     };
 
     const signinState = {
@@ -52,7 +63,8 @@
 
     const settingsState = {
       url: 'settings',
-      template: '<settings></settings>'
+      template: '<settings></settings>',
+      auth: true
     };
 
     $stateProvider

@@ -37,12 +37,22 @@
       </ul>
 
       <!-- Right Part -->
-      <ul class="nav navbar-nav navbar-right">
+
+      <ul ng-hide="$ctrl.user" class="nav navbar-nav navbar-right">
         <li ui-sref-active="active">
           <a ui-sref="app.signin">Sign-in</a>
         </li>
         <li ui-sref-active="active">
           <a ui-sref="app.signup">Sign up</a>
+        </li>
+      </ul>
+
+      <ul ng-show="$ctrl.user" class="nav navbar-nav navbar-right">
+        <li ui-sref-active="active">
+          <a ui-sref="app.settings">Settings</a>
+        </li>
+        <li ui-sref-active="active">
+          <a href ng-click="$ctrl.logout()">Logout</a>
         </li>
       </ul>
 

@@ -1,7 +1,29 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-12s">
-      <h1>Sign In</h1>
+    <div class="col-md-4 col-md-offset-4 text-center">
+      <h3>Sign In</h3>
+      <form>
+        <!-- error box -->
+        <div ng-show="$ctrl.error" class="alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" ng-click="$ctrl.error = undefined">&times;</span></button>
+          <strong>Error:</strong> <span ng-bind="$ctrl.error.message"></span>
+        </div>
+        <!-- email input -->
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Email" ng-model="$ctrl.data.email">
+        </div>
+        <!-- password input -->
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="Password" ng-model="$ctrl.data.password">
+        </div>
+        <!-- login & sign up buttons -->
+        <div class="form-group form-inline">
+          <button class="btn btn-default" ng-click="$ctrl.login()">
+            LOGIN
+          </button>
+          <button class="btn btn-default" ui-sref="app.signup">SIGN UP</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
