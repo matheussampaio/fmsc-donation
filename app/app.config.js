@@ -15,11 +15,59 @@
       templateUrl: 'app/app.html'
     };
 
+    const homeState = {
+      url: 'home',
+      template: '<home></home>'
+    };
+
+    const pressState = {
+      url: 'press',
+      template: '<press></press>'
+    };
+
+    const faqState = {
+      url: 'faq',
+      template: '<faq></faq>'
+    };
+
+    const aboutState = {
+      url: 'about',
+      template: '<about></about>'
+    };
+
+    const donateState = {
+      url: 'donate',
+      template: '<donate></donate>'
+    };
+
+    const signinState = {
+      url: 'signin',
+      template: '<signin></signin>'
+    };
+
+    const signupState = {
+      url: 'signup',
+      template: '<signup></signup>'
+    };
+
+    const settingsState = {
+      url: 'settings',
+      template: '<settings></settings>'
+    };
+
     $stateProvider
-      .state('app', appState);
+      .state('app', appState)
+        .state('app.home', homeState)
+        .state('app.press', pressState)
+        .state('app.faq', faqState)
+        .state('app.about', aboutState)
+        .state('app.donate', donateState)
+        .state('app.signin', signinState)
+        .state('app.signup', signupState)
+        .state('app.settings', settingsState);
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/home');
   }
 
 })();

@@ -1,8 +1,51 @@
-<nav class="navbar navbar-full navbar-primary bg-faded">
-  <a class="navbar-brand" href="#">FMSC</a>
-  <ul class="nav navbar-nav">
-    <li class="nav-item active">
-      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-    </li>
-  </ul>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-fmsc" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <!-- Brand -->
+      <a class="navbar-brand" href="#">FMSC</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar-fmsc">
+      <ul class="nav navbar-nav">
+
+        <!-- Left Part -->
+        <li>
+          <a ui-sref="app.home">Home</a>
+        </li>
+        <li>
+          <a ui-sref="app.press">Press</a>
+        </li>
+        <li>
+          <a ui-sref="app.faq">FAQ</a>
+        </li>
+        <li>
+          <a ui-sref="app.about">About</a>
+        </li>
+        <li ui-sref-active="activexx">
+          <a ui-sref="app.donate">Donate</a>
+        </li>
+      </ul>
+
+      <!-- Right Part -->
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a ui-sref="app.signin">Sign-in</a>
+        </li>
+        <li>
+          <a ui-sref="app.signup">Sign up</a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
 </nav>
