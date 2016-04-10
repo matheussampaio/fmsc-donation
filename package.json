@@ -1,6 +1,6 @@
 {
-  "name": "project-it353",
-  "version": "0.0.0",
+  "name": "fmsc-donation",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "postinstall": "gulp build",
