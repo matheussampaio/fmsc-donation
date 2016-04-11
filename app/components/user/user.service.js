@@ -4,7 +4,10 @@
     .module('fmsc')
     .service('UserService', UserService);
 
-  function UserService($log, FirebaseService) {
+  function UserService($log, $firebaseAuth, Firebase, FirebaseURL) {
+    const _ref = new Firebase(`${FirebaseURL}`);
+    const _auth = $firebaseAuth(_ref);
+
     const service = {
       data: getUser(),
       getUser,
@@ -21,18 +24,18 @@
     ///////////////////
 
     function activate() {
-      FirebaseService.auth.$onAuth((user) => {
+      _auth.$onAuth((user) => {
         $log.debug('user loged in', user);
         service.data = user;
       });
     }
 
     function getUser() {
-      return FirebaseService.auth.$getAuth();
+      return _auth.$getAuth();
     }
 
     function login({ email, password, remember }) {
-      return FirebaseService.auth.$authWithPassword({
+      return _auth.$authWithPassword({
         email,
         password
       }, {
@@ -41,14 +44,18 @@
     }
 
     function logout() {
-      FirebaseService.auth.$unauth();
+      _auth.$unauth();
     }
 
     function createUser({ email, password }) {
-      return FirebaseService.auth.$createUser({
+      return _auth.$createUser({
         email,
         password
       }).then((user) => {
+        _ref.child('users').child(user.uid).set({
+          provider: 'password'
+        });
+
         $log.debug(`Logged in as: ${user.uid}`);
 
         return login({ email, password });
@@ -56,7 +63,7 @@
     }
 
     function isLoggedIn() {
-      return FirebaseService.auth.$getAuth() !== null;
+      return _auth.$getAuth() !== null;
     }
 
   }
