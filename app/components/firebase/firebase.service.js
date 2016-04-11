@@ -4,11 +4,9 @@
     .module('fmsc')
     .service('FirebaseService', FirebaseService);
 
-  function FirebaseService($firebaseAuth) {
-    const URL = 'https://fmsc-donation1.firebaseio.com/';
-
+  function FirebaseService($firebaseAuth, FirebaseUrl) {
     const service = {
-      ref: new Firebase(URL),
+      ref: new Firebase(FirebaseUrl),
       auth: null
     };
 

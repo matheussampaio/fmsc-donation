@@ -5,9 +5,7 @@
  ************************************/
 
 // @import "node_modules/bootstrap/scss/bootstrap.scss";
-@import "_variables.scss";
 
-@import "_grid.scss";
 
 /**
  * INJECTED COMPONENTS SCSS
@@ -15,3 +13,5 @@
 
 //- inject:scss
 //- endinject
+
+@import "node_modules/angular-material/angular-material.scss";

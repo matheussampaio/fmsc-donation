@@ -1,0 +1,40 @@
+<div layout="row" layout-align="center" layout-margin layout-padding>
+  <md-card class="login" flex="30">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Login</span>
+      </md-card-title-text>
+    </md-card-title>
+
+    <md-card-content>
+
+      <md-input-container>
+        <label>Email</label>
+        <input name="email" type="email" ng-model="$ctrl.data.email" required>
+        <div ng-messages="userForm.email.$error">
+          <div ng-message="required">This is required!</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <label>Password</label>
+        <input name="password" type="password" ng-model="$ctrl.data.password" required>
+        <div ng-messages="userForm.password.$error">
+          <div ng-message="required">This is required!</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <md-checkbox ng-model="$ctrl.data.remember" aria-label="Remember Me">
+          Remember Me
+        </md-checkbox>
+      </md-input-container>
+
+    </md-card-content>
+
+    <md-card-actions layout="row" layout-align="end center">
+     <md-button ng-click="$ctrl.login()">Login</md-button>
+   </md-card-actions>
+
+  </md-card>
+</div>

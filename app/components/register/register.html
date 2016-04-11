@@ -1,0 +1,42 @@
+<div layout="row" layout-align="center" layout-margin layout-padding>
+  <md-card class="register" flex="30">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Register</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      <md-input-container>
+        <label>Email</label>
+        <input name="email" type="email" ng-model="$ctrl.data.email" required>
+        <div ng-messages="$ctrl.data.email.$error" role="alert">
+          <div ng-message="required">This is required!</div>
+        </div>
+      </md-input-container>
+      <md-input-container>
+        <label>Confirm Email</label>
+        <input name="email" type="email" ng-model="$ctrl.data.confirmEmail" required>
+        <div ng-messages="$ctrl.data.confirmEmail.$error"  role="alert">
+          <div ng-message="required">This is required!</div>
+        </div>
+      </md-input-container>
+      <md-input-container>
+        <label>Password</label>
+        <input name="password" type="password" ng-model="$ctrl.data.password" required>
+        <div ng-messages="$ctrl.data.password.$error" role="alert">
+          <div ng-message="required">This is required!</div>
+        </div>
+      </md-input-container>
+      <md-input-container>
+        <label>Confirm Password</label>
+        <input name="password" type="password" ng-model="$ctrl.data.confirmPassword" required>
+        <div ng-messages="$ctrl.data.confirmPassword.$error" role="alert">
+          <div ng-message="required">This is required!</div>
+        </div>
+      </md-input-container>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="end center">
+     <md-button ng-click="$ctrl.register()">Register</md-button>
+   </md-card-actions>
+  </md-card>
+</div>

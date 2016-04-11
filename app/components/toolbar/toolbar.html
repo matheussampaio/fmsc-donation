@@ -1,0 +1,48 @@
+<md-toolbar md-scroll-shrink="true">
+  <div class="md-toolbar-tools">
+    <span>FMSC</span>
+
+    <!-- Home -->
+    <md-button
+      ui-sref-active="active"
+      ui-sref="app.home">
+        Home
+    </md-button>
+
+
+    <!-- Donate -->
+    <md-button
+      ui-sref-active="active"
+      ui-sref="app.donate"
+      ng-show="$ctrl.user.data">
+        Donate
+    </md-button>
+
+    <!-- fill up the space between left and right area -->
+    <span flex></span>
+
+    <!-- Login -->
+    <md-button
+      ui-sref-active="active"
+      ui-sref="app.login"
+      ng-hide="$ctrl.user.data" >
+        Login
+    </md-button>
+
+    <!-- Register -->
+    <md-button
+      ui-sref-active="active"
+      ui-sref="app.register"
+      ng-hide="$ctrl.user.data">
+        Register
+    </md-button>
+
+    <!-- Logout -->
+    <md-button
+      ng-click="$ctrl.logout()"
+      ng-show="$ctrl.user.data">
+        Logout
+    </md-button>
+
+  </div>
+</md-toolbar>
