@@ -36,7 +36,16 @@
           invoice.pieces[newPieces[i]] = true;
         }
 
-        _ref.child('invoices').push(invoice);
+        _ref.child('invoices').push(invoice).then((i) => {
+          for (let j = 0; j < newPieces.length; j++) {
+            $log.debug(`update piece ${newPieces[j]} with invoice ${i.key()}`);
+
+            _ref.child(`pieces/${newPieces[j]}`).update({
+              invoice: i.key()
+            });
+          }
+        });
+
         _ref.child(`images/${_imageId}/pieces_reserved`).update(invoice.pieces);
 
         $log.debug('Invoice');
