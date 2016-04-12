@@ -52,8 +52,6 @@
     }
 
     function addPieces() {
-      console.log(vm._pieces.length);
-
       if (vm._pieces.length === 0) {
         return Promise.resolve();
       }
