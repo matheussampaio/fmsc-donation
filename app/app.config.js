@@ -39,12 +39,18 @@
       template: '<register></register>'
     };
 
+    const adminState = {
+      url: 'admin',
+      template: '<admin></admin>'
+    };
+
     $stateProvider
       .state('app', appState)
         .state('app.home', homeState)
         .state('app.donate', donateState)
         .state('app.login', loginState)
-        .state('app.register', registerState);
+        .state('app.register', registerState)
+        .state('app.admin', adminState);
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/home');

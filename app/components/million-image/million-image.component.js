@@ -19,24 +19,26 @@
 
     activate();
 
+    ////////////////
+
     function activate() {
       const MAX_ROWS = 160;
       const MAX_COLUMNS = 250;
 
-      for (let i = 0; i < MAX_ROWS; i++) {
-        vm.rows.push(i);
+      for (let y = 0; y < MAX_ROWS; y++) {
+        vm.rows.push(y);
       }
 
-      for (let i = 0; i < MAX_COLUMNS; i++) {
-        vm.cols.push(i);
+      for (let x = 0; x < MAX_COLUMNS; x++) {
+        vm.cols.push(x);
       }
 
-      for (let i = 0; i < MAX_ROWS; i++) {
+      for (let y = 0; y < MAX_ROWS; y++) {
         vm.meals.push([]);
-        for (let j = 0; j < MAX_COLUMNS; j++) {
+        for (let x = 0; x < MAX_COLUMNS; x++) {
           const rand = Math.random();
 
-          vm.meals[i].push({
+          vm.meals[y].push({
             bought: rand < 0.25,
             buyer: 'John Doe'
           });
