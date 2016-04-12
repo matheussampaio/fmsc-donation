@@ -1,7 +1,22 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-12s">
-      <h1>Donate</h1>
-    </div>
-  </div>
-</div>
+<md-content layout="column" layout-align="center center" layout-margin layout-padding ng-cloak>
+  <h3 class="md-headline">Pieces available: {{ $ctrl.availablePieces.length }}</h3>
+
+  <md-input-container>
+    <label>Quantity</label>
+    <input type="number" ng-model="$ctrl.data.quantity">
+  </md-input-container>
+
+  <md-input-container>
+    <label>Name</label>
+    <input ng-model="$ctrl.data.name">
+  </md-input-container>
+
+  <md-input-container>
+    <label>State</label>
+    <input ng-model="$ctrl.data.state">
+  </md-input-container>
+
+  <p class="md-body-1">Total: {{ $ctrl.data.quantity * 25 * 0.22 | currency }}</p>
+
+  <md-button class="md-raised" ng-click="$ctrl.donate()">Donate</md-button>
+</md-content >
