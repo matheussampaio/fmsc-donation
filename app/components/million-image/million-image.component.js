@@ -7,7 +7,7 @@
       templateUrl: 'million-image/million-image.html'
     });
 
-  function millionImageController($rootScope, $log, Firebase, DEBUGFirebaseURL) {
+  function millionImageController($rootScope, $log, PiecesService, Firebase, DEBUGFirebaseURL) {
     const vm = this;
     const _ref = new Firebase(DEBUGFirebaseURL);
 
@@ -26,7 +26,8 @@
     ////////////////
 
     function init() {
-      getImageID();
+      PiecesService.getPieces();
+      // getImageID();
     }
 
     function getImageID() {
