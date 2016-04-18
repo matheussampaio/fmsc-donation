@@ -25,7 +25,6 @@
 
     function activate() {
       _auth.$onAuth((user) => {
-        $log.debug('user loged in', user);
         service.data = user;
       });
     }

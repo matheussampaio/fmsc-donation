@@ -12,6 +12,9 @@
     "no-param-reassign": 0,
     "padded-blocks": 0,
     "comma-dangle": [2, "never"],
-    "spaced-comment": 0
+    "spaced-comment": 0,
+    "arrow-body-style": 0,
+    "no-console": 0,
+    "angular/log": 0
   }
 }
