@@ -7,7 +7,7 @@
       templateUrl: 'register/register.html'
     });
 
-  function registerController($state, $log, UserService) {
+  function registerController($state, $log, AuthService) {
     const vm = this;
 
     vm.data = {
@@ -36,7 +36,7 @@
         $log.error('password don\'t match');
 
       } else {
-        UserService.createUser(vm.data)
+        AuthService.createUser(vm.data)
           .then(() => {
             $state.go('app.home');
           })

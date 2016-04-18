@@ -21,27 +21,12 @@
 
     const homeState = {
       url: 'home',
-      template: '<home pieces="pieces"></home>',
-      resolve: {
-        pieces: PiecesService => PiecesService.getPieces('sold')
-      },
-      /* @ngInject */
-      controller: ($scope, pieces) => {
-        console.log('vsf');
-        $scope.pieces = pieces;
-      }
+      template: '<home></home>'
     };
 
     const donateState = {
       url: 'donate',
-      template: '<donate available="available"></donate>',
-      resolve: {
-        available: PiecesService => PiecesService.getPieces('available')
-      },
-      /* @ngInject */
-      controller: ($scope, available) => {
-        $scope.available = available;
-      }
+      template: '<donate></donate>'
     };
 
     const loginState = {

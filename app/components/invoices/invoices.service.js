@@ -4,7 +4,7 @@
     .module('fmsc')
     .service('InvoicesService', InvoicesService);
 
-  function InvoicesService($q, $log, UserService, PiecesService, PromiseHandler, Firebase,
+  function InvoicesService($q, $log, AuthService, PiecesService, PromiseHandler, Firebase,
     DEBUGFirebaseURL) {
     const _ref = new Firebase(DEBUGFirebaseURL);
 
@@ -19,7 +19,7 @@
         state,
         name,
         quantity,
-        user: UserService.data.uid,
+        user: AuthService.user.uid,
         reserved_time: Date.now(),
         pieces: {}
       };

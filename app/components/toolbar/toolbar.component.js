@@ -7,17 +7,17 @@
       templateUrl: 'toolbar/toolbar.html'
     });
 
-  function toolbarController($state, $log, UserService) {
+  function toolbarController($state, $log, AuthService) {
     const vm = this;
 
-    vm.user = UserService;
+    vm.auth = AuthService;
 
     vm.logout = logout;
 
     ////////////////
 
     function logout() {
-      UserService.logout();
+      AuthService.logout();
       $state.go('app.home');
     }
   }

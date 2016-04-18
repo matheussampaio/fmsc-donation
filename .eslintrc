@@ -16,5 +16,8 @@
     "arrow-body-style": 0,
     "no-console": 0,
     "angular/log": 0
+  },
+  "globals": {
+    "Firebase": true
   }
 }

@@ -1,5 +1,5 @@
-var path = require('path');
+const path = require('path');
 
-exports.index = function(req, res) {
+exports.index = function (req, res) {
   res.sendFile(path.resolve('www/index.html'));
 };

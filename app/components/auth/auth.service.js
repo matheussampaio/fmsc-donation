@@ -2,14 +2,13 @@
 
   angular
     .module('fmsc')
-    .service('UserService', UserService);
+    .service('AuthService', AuthService);
 
-  function UserService($log, $firebaseAuth, Firebase, FirebaseURL) {
-    const _ref = new Firebase(`${FirebaseURL}`);
-    const _auth = $firebaseAuth(_ref);
+  function AuthService($log, FirebaseRef) {
+    const _auth = FirebaseRef.auth;
 
     const service = {
-      data: getUser(),
+      user: getUser(),
       getUser,
       login,
       logout,
@@ -25,7 +24,7 @@
 
     function activate() {
       _auth.$onAuth((user) => {
-        service.data = user;
+        service.user = user;
       });
     }
 
@@ -51,11 +50,14 @@
         email,
         password
       }).then((user) => {
-        _ref.child('users').child(user.uid).set({
+        Firebase.users[user.uid] = {
           provider: 'password'
-        });
+        };
 
-        $log.debug(`Logged in as: ${user.uid}`);
+        return Firebase.users.$save();
+      })
+      .then(() => {
+        $log.debug('User created.');
 
         return login({ email, password });
       });

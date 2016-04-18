@@ -7,7 +7,7 @@
       templateUrl: 'login/login.html'
     });
 
-  function loginController($state, $log, UserService) {
+  function loginController($state, $log, AuthService) {
     const vm = this;
 
     vm.data = {
@@ -21,7 +21,7 @@
     ////////////////
 
     function login() {
-      UserService.login(vm.data)
+      AuthService.login(vm.data)
         .then((user) => {
           $log.debug('Logged in as:', user);
           $state.go('app.home');

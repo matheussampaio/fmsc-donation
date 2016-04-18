@@ -24,7 +24,7 @@
     <md-button
       ui-sref-active="active"
       ui-sref="app.login"
-      ng-hide="$ctrl.user.data" >
+      ng-hide="$ctrl.auth.user" >
         Login
     </md-button>
 
@@ -32,14 +32,14 @@
     <md-button
       ui-sref-active="active"
       ui-sref="app.register"
-      ng-hide="$ctrl.user.data">
+      ng-hide="$ctrl.auth.user">
         Register
     </md-button>
 
     <!-- Logout -->
     <md-button
       ng-click="$ctrl.logout()"
-      ng-show="$ctrl.user.data">
+      ng-show="$ctrl.auth.user">
         Logout
     </md-button>
 

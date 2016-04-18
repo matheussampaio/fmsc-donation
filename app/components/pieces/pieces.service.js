@@ -4,8 +4,8 @@
     .module('fmsc')
     .service('PiecesService', PiecesService);
 
-  function PiecesService($q, $log, _, PromiseHandler, Firebase, DEBUGFirebaseURL) {
-    const _ref = new Firebase(DEBUGFirebaseURL);
+  function PiecesService($q, $log, _, PromiseHandler, FirebaseRef) {
+    const _ref = FirebaseRef.root;
     const vm = this;
 
     let _imageId = null;
@@ -27,13 +27,12 @@
     return service;
 
     function activate() {
+      console.log('pieces service activate');
       _promise = getCurrentImage().then(setPieces);
     }
 
     function getPieces(type) {
-      return _promise.then(() => {
-        return vm.pieces[type];
-      });
+      return $q.when(_promise.then(() => vm.pieces[type]));
     }
 
     function update({ id, obj }) {
@@ -70,17 +69,17 @@
 
     function getCurrentImage() {
       if (_imageId !== null) {
-        return $q.when();
+        return Promise.resolve();
       }
 
-      return $q.when(_ref.child('current_image')
+      return _ref.child('current_image')
         .once('value', (snap) => {
           _imageId = snap.val();
-        }));
+        });
     }
 
     function setPieces() {
-      return $q.all([
+      return Promise.all([
         setAvailablePieces(),
         setReservedPieces(),
         setSoldPieces()
@@ -88,30 +87,30 @@
     }
 
     function setAvailablePieces() {
-      return $q.when(_ref.child(`images/${_imageId}/pieces_available`)
+      return _ref.child(`images/${_imageId}/pieces_available`)
         .once('value', (available) => {
           if (available.val() !== null) {
             vm.pieces.available = Object.keys(available.val());
           }
-        }));
+        });
     }
 
     function setReservedPieces() {
-      return $q.when(_ref.child(`images/${_imageId}/pieces_reserved`)
+      return _ref.child(`images/${_imageId}/pieces_reserved`)
         .once('value', (reserved) => {
           if (reserved.val() !== null) {
             vm.pieces.reserved = Object.keys(reserved.val());
           }
-        }));
+        });
     }
 
     function setSoldPieces() {
-      return $q.when(_ref.child(`images/${_imageId}/pieces_sold`)
+      return _ref.child(`images/${_imageId}/pieces_sold`)
         .once('value', (sold) => {
           if (sold.val() !== null) {
             vm.pieces.sold = Object.keys(sold.val());
           }
-        }));
+        });
     }
 
   }

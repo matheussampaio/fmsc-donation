@@ -4,19 +4,28 @@
     .module('fmsc')
     .component('donate', {
       controller: donateController,
-      templateUrl: 'donate/donate.html',
-      bindings: {
-        available: '<'
-      }
+      templateUrl: 'donate/donate.html'
     });
 
-  function donateController($log, InvoicesService) {
+  function donateController($log, PiecesService, InvoicesService) {
     const vm = this;
 
-    vm.data = {};
+    vm.data = {
+      loading: true
+    };
     vm.checkout = checkout;
 
+    activate();
+
     ////////////////
+
+    function activate() {
+      PiecesService.getPieces('available')
+        .then((available) => {
+          vm.data.loading = false;
+          vm.data.available = available.length;
+        });
+    }
 
     function checkout() {
       InvoicesService.create({

@@ -1,5 +1,8 @@
-<md-content layout="column" layout-align="center center" layout-margin layout-padding ng-cloak>
-  <h3 class="md-headline">Pieces available: {{ $ctrl.available.length }}</h3>
+<md-progress-linear ng-if="$ctrl.data.loading" md-mode="indeterminate" value="{{$ctrl.data.progress}}"></md-progress-linear>
+
+<md-content ng-if="!$ctrl.data.loading" layout="column" layout-align="center center" layout-margin layout-padding ng-cloak>
+
+  <h3 class="md-headline">Pieces available: {{ $ctrl.data.available }}</h3>
 
   <form name="donate">
     <div layout="column" class="input-row">
@@ -7,11 +10,11 @@
 
       <md-input-container>
         <label>Quantity</label>
-        <input type="number" name="quantity" ng-model="$ctrl.data.quantity" min="1" max="{{$ctrl.available.length}}">
+        <input type="number" name="quantity" ng-model="$ctrl.data.quantity" min="1" max="{{$ctrl.data.available}}">
         <div ng-messages="donate.quantity.$error">
           <div ng-message="required">This is required!</div>
           <div ng-message="min">You should donate at least one.</div>
-          <div ng-message="max">You can't donate more then {{$ctrl.available.length}}.</div>
+          <div ng-message="max">You can't donate more then {{$ctrl.data.available}}.</div>
         </div>
       </md-input-container>
 
