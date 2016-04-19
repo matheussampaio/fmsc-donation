@@ -16,3 +16,4 @@ deploy:
   buildpack: nodejs
   app:
     master: fmsc-donation
+    develop: fmsc-donation-debug
