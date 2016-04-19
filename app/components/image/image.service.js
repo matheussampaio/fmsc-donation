@@ -4,12 +4,10 @@
     .module('fmsc')
     .service('ImageService', ImageService);
 
-  function ImageService($firebaseArray, $firebaseObject, FirebaseRef) {
+  function ImageService($q, $firebaseObject, FirebaseRef) {
     const service = {
       imageId: null,
       filename: null,
-      available: null,
-      reserved: null,
       sold: null,
 
       eventsCallback: {
@@ -18,12 +16,8 @@
 
       getCurrentImageId,
       getFilename,
-      getReserved,
-      getAvaiable,
-      getSold,
 
-      destroyAvaiable,
-      destroyReserved,
+      getSold,
       destroySold,
 
       register,
@@ -73,53 +67,32 @@
         });
     }
 
-    function getAvaiable() {
-      if (service.avaiable) {
-        return Promise.resolve(service.avaiable);
-      }
-
-      return _initResource('pieces_available').then(avaiable => {
-        service.avaiable = avaiable;
-
-        service.avaiable.$watch(event => _eventHandler('avaiable', event));
-
-        return service.avaiable;
-      });
-    }
-
     function getSold() {
       if (service.sold) {
         return Promise.resolve(service.sold);
+      } else if (service.loadingSold) {
+        return service.loadingSold;
       }
 
-      return _initResource('pieces_sold').then(sold => {
-        service.sold = sold;
-
-        service.sold.$watch(event => _eventHandler('sold', event));
-
-        return service.sold;
+      service.loadingSold = _initResource('pieces_sold').then((ref) => {
+        return ref.$loaded().then(() => {
+          service.sold = ref;
+          service.sold.$watch(event => _eventHandler('sold', event));
+          service.loadingSold = null;
+          return service.sold;
+        });
       });
-    }
 
-    function getReserved() {
-      if (service.reserved) {
-        return Promise.resolve(service.reserved);
-      }
-
-      return _initResource('pieces_reserved').then(reserved => {
-        service.reserved = reserved;
-
-        service.reserved.$watch(event => _eventHandler('reserved', event));
-
-        return service.reserved;
-      });
+      return service.loadingSold;
     }
 
     function _initResource(resource) {
-      return getCurrentImageId().then((imageId) => {
+      return $q.when(getCurrentImageId().then((imageId) => {
         const url = `${FirebaseRef.url}/images/${imageId}/${resource}`;
-        return $firebaseArray(new Firebase(url)).$loaded();
-      });
+        const ref = $firebaseObject(new Firebase(url));
+
+        return ref;
+      }));
     }
 
     function _eventHandler(resource, event) {
@@ -132,24 +105,11 @@
       }
     }
 
-    function destroyAvaiable() {
-      _destroy('avaiable');
-    }
-
     function destroySold() {
-      _destroy('sold');
+      service.sodl.$destroy();
+      service.sodl = null;
     }
 
-    function destroyReserved() {
-      _destroy('reserved');
-    }
-
-    function _destroy(resource) {
-      if (service[resource]) {
-        service[resource].$destroy();
-        service[resource] = null;
-      }
-    }
   }
 
 })();

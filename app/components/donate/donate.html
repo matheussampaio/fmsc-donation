@@ -1,47 +1,55 @@
-<md-progress-linear ng-if="$ctrl.data.loading" md-mode="indeterminate" value="{{$ctrl.data.progress}}"></md-progress-linear>
+<div layout="row" layout-align="center" layout-margin layout-padding>
+  <md-card flex-sm="90" flex-gt-md="50">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Donate</span>
+      </md-card-title-text>
+    </md-card-title>
 
-<md-content ng-if="!$ctrl.data.loading" layout="column" layout-align="center center" layout-margin layout-padding ng-cloak>
+    <md-card-content>
+      <form name="donate">
+        <div layout="column" class="input-row">
+          <md-input-container>
+            <label>Quantity</label>
+            <input type="number" name="quantity" ng-model="$ctrl.data.quantity" min="1">
+            <div ng-messages="donate.quantity.$error">
+              <div ng-message="required">This is required!</div>
+              <div ng-message="min">You should donate at least one.</div>
+            </div>
+          </md-input-container>
 
-  <h3 class="md-headline">Pieces available: {{ $ctrl.data.available }}</h3>
+          <md-input-container>
+            <label>Name</label>
+            <input type="text" name="name" ng-model="$ctrl.data.name" minlength="4" md-maxlength="30" required>
+            <div ng-messages="donate.name.$error">
+              <div ng-message="required">This is required!</div>
+              <div ng-message="md-maxlength">That's too long!</div>
+              <div ng-message="minlength">That's too short!</div>
+            </div>
+          </md-input-container>
 
-  <form name="donate">
-    <div layout="column" class="input-row">
-      <md-progress-linear md-mode="determinate" value="{{$ctrl.data.progress}}"></md-progress-linear>
+          <md-input-container>
+            <label>State</label>
+            <md-select ng-model="$ctrl.data.state" required>
+              <md-option ng-repeat="state in $ctrl.states" value="{{state}}">
+                {{state}}
+              </md-option>
+            </md-select>
+            <div ng-messages="$donate.state.$error">
+              <div ng-message="required">This is required!</div>
+            </div>
+          </md-input-container>
 
-      <md-input-container>
-        <label>Quantity</label>
-        <input type="number" name="quantity" ng-model="$ctrl.data.quantity" min="1" max="{{$ctrl.data.available}}">
-        <div ng-messages="donate.quantity.$error">
-          <div ng-message="required">This is required!</div>
-          <div ng-message="min">You should donate at least one.</div>
-          <div ng-message="max">You can't donate more then {{$ctrl.data.available}}.</div>
+
+          <md-card-actions layout="row" layout-align="end center">
+            <p class="md-body-1" ng-show="$ctrl.data.quantity">Total: {{ $ctrl.data.quantity * 25 * 0.22 | currency }}</p>
+
+            <md-button class="md-primary" ng-click="$ctrl.checkout()">Checkout</md-button>
+          </md-card-actions>
+
         </div>
-      </md-input-container>
-
-      <md-input-container>
-        <label>Name</label>
-        <input type="text" name="name" ng-model="$ctrl.data.name" minlength="4" md-maxlength="30" required>
-        <div ng-messages="donate.name.$error">
-          <div ng-message="required">This is required!</div>
-          <div ng-message="md-maxlength">That's too long!</div>
-          <div ng-message="minlength">That's too short!</div>
-        </div>
-      </md-input-container>
-
-      <md-input-container>
-        <label>State</label>
-        <input type="text" name="state" ng-model="$ctrl.data.state" minlength="4" md-maxlength="30" required>
-        <div ng-messages="donate.state.$error">
-          <div ng-message="required">This is required!</div>
-          <div ng-message="md-maxlength">That's too long!</div>
-          <div ng-message="minlength">That's too short!</div>
-        </div>
-      </md-input-container>
-
-      <p class="md-body-1" ng-show="$ctrl.data.quantity">Total: {{ $ctrl.data.quantity * 25 * 0.22 | currency }}</p>
-
-      <md-button class="md-raised" ng-click="$ctrl.checkout()">Checkout</md-button>
-    </div>
-  </form>
+      </form>
+    </md-card-content>
+  </md-card>
 
 </md-content >

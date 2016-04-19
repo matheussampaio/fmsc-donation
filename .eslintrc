@@ -15,7 +15,9 @@
     "spaced-comment": 0,
     "arrow-body-style": 0,
     "no-console": 0,
-    "angular/log": 0
+    "angular/log": 0,
+    "angular/no-service-method": 0,
+    "angular/on-watch": 0
   },
   "globals": {
     "Firebase": true

@@ -4,13 +4,20 @@
     .run(fmscRun)
     .config(fmscConfig);
 
-  function fmscRun() {
-    // $rootScope.$on('$stateChangeStart', (event, toState, toParams) => {
-    //   if (toState.auth && !$rootScope.user) {
-    //     event.preventDefault();
-    //     $state.go('app.login');
-    //   }
-    // });
+  function fmscRun($state, $rootScope, AuthService) {
+    $rootScope.$on('$stateChangeStart', (event, toState) => {
+
+      // if already authenticated...
+      const isAuthenticated = AuthService.isAuthenticated();
+      // any public action is allowed
+      const isPrivateAction = angular.isObject(toState.data) && toState.data.private === true;
+
+      if (!isAuthenticated && isPrivateAction) {
+        event.preventDefault();
+
+        $state.go('app.login', { from: toState.name });
+      }
+    });
   }
 
   function fmscConfig($stateProvider, $urlRouterProvider) {
@@ -26,12 +33,25 @@
 
     const donateState = {
       url: 'donate',
-      template: '<donate></donate>'
+      template: '<donate user="user"></donate>',
+      data: {
+        private: true
+      },
+      resolve: {
+        user: (AuthService) => AuthService.getUser()
+      },
+      /* @ngInject */
+      controller: ($scope, user) => {
+        $scope.user = user;
+      }
     };
 
     const loginState = {
       url: 'login',
-      template: '<login></login>'
+      template: '<login></login>',
+      params: {
+        from: 'app.home'
+      }
     };
 
     const registerState = {

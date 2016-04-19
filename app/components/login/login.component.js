@@ -24,7 +24,7 @@
       AuthService.login(vm.data)
         .then((user) => {
           $log.debug('Logged in as:', user);
-          $state.go('app.home');
+          $state.go($state.params.from);
         }).catch((error) => {
           vm.error = error;
           $log.error('Authentication failed:', error);

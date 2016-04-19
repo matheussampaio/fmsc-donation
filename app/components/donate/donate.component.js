@@ -4,63 +4,42 @@
     .module('fmsc')
     .component('donate', {
       controller: donateController,
-      templateUrl: 'donate/donate.html'
+      templateUrl: 'donate/donate.html',
+      bindings: {
+        user: '<'
+      }
     });
 
-  function donateController($log, ImageService, InvoicesService) {
+  function donateController($log, UtilsService, InvoicesService) {
     const vm = this;
 
-    vm.data = {
-      loading: true
-    };
-    vm.checkout = checkout;
+    console.log('user', vm.user);
 
+    vm.data = {};
+    vm.states = UtilsService.states;
+
+    vm.checkout = checkout;
     vm.$onInit = $onInit;
-    vm.$onDestroy = $onDestroy;
 
     ////////////////
 
     function $onInit() {
-      ImageService.register({
-        id: 'donate',
-        resource: 'avaiable',
-        fn: _update
-      });
-
-      ImageService.getAvaiable()
-        .then((available) => {
-          vm.data.loading = false;
-          vm.data.available = available.length;
-        });
-    }
-
-    function $onDestroy() {
-      ImageService.unregister({
-        id: 'donate'
-      });
-
-      ImageService.destroyAvaiable();
+      vm.data.quantity = 1;
+      vm.data.name = vm.user.name;
+      vm.data.state = vm.user.state;
     }
 
     function checkout() {
-      InvoicesService.create({
-        state: vm.data.state,
-        name: vm.data.name,
-        quantity: vm.data.quantity
-      })
-      .then((invoice) => {
-        vm.invoice = invoice;
-        console.log('invoice', invoice);
-      });
-    }
-
-    function _update(event) {
-      console.log(event);
-
-      if (event.event === 'child_removed') {
-        vm.data.available--;
-      } else if (event.event === 'child_added') {
-        vm.data.available++;
+      if (vm.data.quantity && vm.data.name && vm.data.state) {
+        InvoicesService.create({
+          state: vm.data.state,
+          name: vm.data.name,
+          quantity: vm.data.quantity
+        })
+        .then((invoice) => {
+          vm.invoice = invoice;
+          console.log('invoice', invoice);
+        });
       }
     }
   }

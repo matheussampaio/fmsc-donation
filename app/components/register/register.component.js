@@ -7,7 +7,7 @@
       templateUrl: 'register/register.html'
     });
 
-  function registerController($state, $log, AuthService) {
+  function registerController($state, $log, UtilsService, AuthService) {
     const vm = this;
 
     vm.data = {
@@ -16,13 +16,13 @@
       password: null,
       confirmPassword: null
     };
+    vm.states = UtilsService.states;
+
     vm.register = register;
 
     ////////////////
 
     function register() {
-      $log.debug(vm.data);
-
       if (!vm.data.email) {
         $log.error('missing email');
 

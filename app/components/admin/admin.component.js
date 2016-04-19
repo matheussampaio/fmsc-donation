@@ -7,7 +7,7 @@
       templateUrl: 'admin/admin.html'
     });
 
-  function adminController($rootScope, Firebase, DEBUGFirebaseURL) {
+  function adminController($rootScope, UtilsService, Firebase, DEBUGFirebaseURL) {
     const vm = this;
     const MAX_ROWS = 160;
     const MAX_COLUMNS = 250;
@@ -16,7 +16,6 @@
     let _imageId = null;
 
     vm.data = {};
-    vm.refresh = refresh;
     vm.createImage = createImage;
     vm._pieces = [];
 
@@ -63,7 +62,7 @@
       }
 
       return Promise.all(piecesAddPromise).then(() => {
-        refresh();
+        UtilsService.refresh();
         addPieces();
       });
     }
@@ -74,12 +73,6 @@
           [p.key()]: true
         });
       });
-    }
-
-    function refresh() {
-      if (!$rootScope.$$phase) {
-        $rootScope.$digest();
-      }
     }
 
   }

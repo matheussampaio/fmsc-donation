@@ -4,7 +4,7 @@
     .module('fmsc')
     .service('AuthService', AuthService);
 
-  function AuthService($log, FirebaseRef) {
+  function AuthService($q, $log, FirebaseRef) {
     const _auth = FirebaseRef.auth;
 
     const service = {
@@ -13,7 +13,7 @@
       login,
       logout,
       createUser,
-      isLoggedIn
+      isAuthenticated
     };
 
     activate();
@@ -23,13 +23,38 @@
     ///////////////////
 
     function activate() {
-      _auth.$onAuth((user) => {
-        service.user = user;
+      _auth.$onAuth(() => {
+        getUser()
+          .then(user => {
+            service.user = user;
+
+            console.log(service.user);
+          })
+          .catch(() => {
+            service.user = null;
+          });
       });
     }
 
     function getUser() {
-      return _auth.$getAuth();
+      const auth = _auth.$getAuth();
+
+      if (auth === null) {
+        return $q.reject();
+      }
+
+      return $q((resolve, reject) => {
+        FirebaseRef.root.child(`users/${auth.uid}`).once('value').then(snapshot => {
+          if (!snapshot) {
+            return reject();
+          }
+
+          const user = snapshot.val();
+          user.uid = auth.uid;
+
+          return resolve(user);
+        });
+      });
     }
 
     function login({ email, password, remember }) {
@@ -45,16 +70,17 @@
       _auth.$unauth();
     }
 
-    function createUser({ email, password }) {
+    function createUser({ email, password, name, state }) {
       return _auth.$createUser({
         email,
         password
-      }).then((user) => {
-        Firebase.users[user.uid] = {
-          provider: 'password'
-        };
-
-        return Firebase.users.$save();
+      })
+      .then((user) => {
+        return FirebaseRef.root.child('users').child(user.uid).set({
+          provider: 'password',
+          name,
+          state
+        });
       })
       .then(() => {
         $log.debug('User created.');
@@ -63,7 +89,7 @@
       });
     }
 
-    function isLoggedIn() {
+    function isAuthenticated() {
       return _auth.$getAuth() !== null;
     }
 

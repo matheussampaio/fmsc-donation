@@ -57,7 +57,7 @@
       create: () => {
         return new PromiseHandler($q);
       }
-    }
+    };
   }
 
 })();

@@ -4,7 +4,7 @@
     .module('fmsc')
     .service('PiecesService', PiecesService);
 
-  function PiecesService($q, $log, _, PromiseHandler, FirebaseRef) {
+  function PiecesService($q, $log, _, PromiseHandler, ImageService, FirebaseRef) {
     const vm = {
       imageId: null,
       ref: {
@@ -28,26 +28,24 @@
     }
 
     function _reservePiece() {
-      const piece = _.sample(vm.pieces.available);
-
-      return vm.ref.root.child(`images/${vm.imageId}/pieces_available/${piece}`)
-        .remove()
-        .then((...obj) => {
-          console.info(obj);
-
-          return vm.ref.root.child(`images/${vm.imageId}/pieces_reserved`)
-            .update({
-              [piece]: true
-            });
-        })
-        .then((error) => {
-          if (error) console.warn(error);
-          return piece;
-        })
-        .catch((error) => {
-          if (error) console.error(error);
-          _reservePiece();
+      Promise.all([
+        ImageService.getAvailable(),
+        ImageService.getReserved()
+      ]).then(([available, reserved]) => {
+        return available.$remove(_.random(available.length - 1)).then(piece => {
+          console.log('removed', piece.key());
+          reserved[piece] = true;
+          return reserved.$save(piece);
         });
+      })
+      .then(piece => {
+        console.log(piece);
+        return piece.key();
+      })
+      .catch(error => {
+        if (error) console.error(error);
+        // _reservePiece();
+      });
     }
 
   }
