@@ -4,51 +4,52 @@
     .module('fmsc')
     .directive('millionCanvas', millionCanvasDirective);
 
-  function millionCanvasDirective($log) {
+  function millionCanvasDirective($log, DrawCanvas) {
     return {
       controller: millionCanvasController,
+      controllerAs: '$ctrl',
       templateUrl: 'million-canvas/million-canvas.html',
       scope: {
         pieces: '='
       },
       link: ($scope, $element) => {
-        const con = $element[0].children[0].getContext('2d');
+        const image = new Image();
+        const canvas = $element[0].children[1];
 
-        const background = new Image();
-        background.src = 'assets/images/image-2.jpg';
-        background.onload = () => {
-
-          const MAX_ROWS = 160;
-          const MAX_COLUMNS = 250;
-          const ratioX = background.width / 1250;
-          const ratioY = background.height / 800;
-
-          $log.debug(`background.width : ${background.width}`);
-          $log.debug(`background.height: ${background.height}`);
-          $log.debug(`ratioX : ${ratioX}`);
-          $log.debug(`ratioY : ${ratioY}`);
-
-          for (let y = 0; y < MAX_ROWS; y++) {
-            for (let x = 0; x < MAX_COLUMNS; x++) {
-              const drawIt = Math.random() < 0.5;
-
-              if (!drawIt) {
-                continue;
-              }
-
-              // drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)
-              con.drawImage(background,
-                x * 5 * ratioX, y * 5 * ratioY, 5 * ratioX, 5 * ratioY,
-                x * 5, y * 5, 5, 5);
-            }
-          }
+        image.src = 'assets/images/image.jpg';
+        image.onload = () => {
+          $log.debug('image onload');
+          $scope.drawCanvas = DrawCanvas.create(canvas, image);
         };
+
+        canvas.addEventListener('mousemove', showBuyer, false);
+
+        function showBuyer(e) {
+          const r = canvas.getBoundingClientRect();
+          const mouseX = (e.clientX - r.left) / (r.right - r.left) * canvas.width;
+          const mouseY = (e.clientY - r.top) / (r.bottom - r.top) * canvas.height;
+          const pieceX = Math.floor(mouseX / 5);
+          const pieceY = Math.floor(mouseY / 5);
+
+          $log.debug(`pieceX : ${pieceX} pieceY : ${pieceY}`);
+        }
       }
     };
   }
 
-  function millionCanvasController($log) {
+  function millionCanvasController($log, $scope) {
     const vm = this;
+
+    let lastX = 0;
+    let lastY = 0;
+
+    vm.newPieces = newPieces;
+
+    function newPieces() {
+      $log.debug('new pieces');
+
+      $scope.drawCanvas.drawOne({ x: lastX++, y: lastY++ });
+    }
   }
 
 })();
