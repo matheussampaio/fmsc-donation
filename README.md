@@ -2,9 +2,9 @@ Project - IT 353
 ================
 
 # Requirements:
-- Node.js v5.8.0
+- Node.js v5.10.1
 - MongoDB v3.2.1
-- NPM v3.5.0
+- NPM v3.8.6
 - Gulp 3.9.0
 
 # How to Install:

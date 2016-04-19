@@ -4,9 +4,9 @@ cache:
   directories:
     - node_modules
 node_js:
-- '5.1.0'
+- '5.10.1'
 before_install:
-- npm i -g npm@^3.5.0
+- npm i -g npm@^3.8.6
 before_script:
 - npm prune
 deploy:
@@ -15,4 +15,4 @@ deploy:
   skip_cleanup: true
   buildpack: nodejs
   app:
-    master: fmsc
+    master: fmsc-donation
