@@ -5,9 +5,8 @@
       this.$q = $q;
     }
 
-    start({ resource, quantity, notify, fn, max = 25 }) {
+    start({ resource, quantity, fn, max = 25 }) {
       this.resource = resource;
-      this.notify = notify;
       this.max = max;
       this.fn = fn;
       this.result = [];
@@ -39,10 +38,6 @@
         .then((results) => {
           this.quantity -= turn;
           this.result = this.result.concat(results);
-
-          if (this.notify) {
-            this.notify(this.quantity);
-          }
 
           if (this.quantity > 0) {
             return this._recursive();
