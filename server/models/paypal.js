@@ -13,9 +13,16 @@ paypal.post('/', (req, res) => {
 });
 
 
-function replyIPN(req, res) {
+function replyIPN(req) {
   console.log('reply ipn');
-  return Promise.resolved();
+  console.log(req.get('host'), req.get('body'));
+
+  return new Promise(resolve => {
+    request.post({ url: req.get('host'), formData: req.get('body') }, (error, response, body) => {
+      console.log(error, response, body);
+      resolve();
+    });
+  });
 }
 
 /**
