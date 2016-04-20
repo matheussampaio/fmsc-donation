@@ -2,20 +2,17 @@
   <div class="md-toolbar-tools">
     <h2>FMSC</h2>
 
-  <!-- Left Side -->
-  <md-button hide-xs ui-sref-active="active" ui-sref="app.home">Home</md-button>
-  <md-button hide-xs ui-sref-active="active" ui-sref="app.donate">Donate</md-button>
+    <!-- Left Side -->
+    <md-button hide-xs ui-sref-active="active" ui-sref="app.home">Home</md-button>
+    <md-button hide-xs ui-sref-active="active" ui-sref="app.donate">Donate</md-button>
 
-  <span flex></span>
+    <span flex></span>
 
+    <!-- Right Side -->
+    <md-button class="md-icon-button" md-no-ink hide-gt-xs><md-icon>menu</md-icon></md-button>
+    <md-button hide-xs ui-sref-active="active" ui-sref="app.login" ng-if="!$ctrl.auth.user">Login</md-button>
+    <md-button hide-xs ui-sref-active="active" ui-sref="app.register" ng-if="!$ctrl.auth.user">Register</md-button>
+    <md-button hide-xs ng-click="$ctrl.logout()" ng-if="$ctrl.auth.user">Logout</md-button>
 
-
-
-  <!-- Right Side -->
-  <md-button class="menu" md-no-ink hide-gt-xs><md-icon>menu</md-icon></md-button>
-  <md-button hide-xs ui-sref-active="active" ui-sref="app.login" ng-if="!$ctrl.auth.user">Login</md-button>
-  <md-button hide-xs ui-sref-active="active" ui-sref="app.register" ng-if="!$ctrl.auth.user">Register</md-button>
-  <md-button hide-xs ng-click="$ctrl.logout()" ng-if="$ctrl.auth.user">Logout</md-button>
-
-</div>
+  </div>
 </md-toolbar>
