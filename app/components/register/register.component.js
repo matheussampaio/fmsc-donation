@@ -10,38 +10,51 @@
   function registerController($state, $log, UtilsService, AuthService) {
     const vm = this;
 
+    vm.loading = false;
+    vm.states = UtilsService.states;
     vm.data = {
       email: null,
       confirmEmail: null,
       password: null,
       confirmPassword: null
     };
-    vm.states = UtilsService.states;
+    vm.error = {
+      show: null,
+      message: {
+        EMAIL_TAKEN: 'The specified email address is already in use.',
+        PASSWORD_NOT_MATCH: 'The confirm password should match.',
+        EMAIL_NOT_MATCH: 'The confirm email should match.'
+      },
+      last: null
+    };
 
     vm.register = register;
 
     ////////////////
 
     function register() {
-      if (!vm.data.email) {
-        $log.error('missing email');
-
-      } else if (!vm.data.password) {
-        $log.error('missing password');
-
-      } else if (vm.data.email !== vm.data.confirmEmail) {
-        $log.error('email don\'t match');
+      if (vm.data.email !== vm.data.confirmEmail) {
+        vm.error.show = 'EMAIL_NOT_MATCH';
 
       } else if (vm.data.password !== vm.data.confirmPassword) {
-        $log.error('password don\'t match');
+        vm.error.show = 'PASSWORD_NOT_MATCH';
 
-      } else {
+      } else if (!vm.loading) {
+        vm.loading = true;
         AuthService.createUser(vm.data)
           .then(() => {
             $state.go('app.home');
           })
           .catch((error) => {
-            $log.error(`Error: ${error}`);
+            console.log(error.code, error);
+            if (!vm.error.message[error.code]) {
+              vm.error.show = 'LAST';
+              vm.error.message.last = error;
+            } else {
+              vm.error.show = error.code;
+            }
+
+            vm.loading = false;
           });
       }
     }

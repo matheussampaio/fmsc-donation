@@ -27,8 +27,6 @@
         getUser()
           .then(user => {
             service.user = user;
-
-            console.log(service.user);
           })
           .catch(() => {
             service.user = null;

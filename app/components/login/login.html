@@ -6,36 +6,44 @@
       </md-card-title-text>
     </md-card-title>
 
-    <md-card-content>
-      <form name="login">
-        <div layout="column" class="input-row">
-          <md-input-container>
-            <label>Email</label>
-            <input name="email" type="email" ng-model="$ctrl.data.email" required>
-            <div ng-messages="login.email.$error">
-              <div ng-message="required">This is required!</div>
+    <form name="login">
+      <md-card-content>
+          <div layout="column" class="input-row">
+
+            <div layout="row" layout-align="center" ng-if="$ctrl.error.show">
+              <span class="fmsc-error md-caption" layout-padding>
+                {{ $ctrl.error.message[$ctrl.error.show] }}
+              </span>
             </div>
-          </md-input-container>
 
-          <md-input-container>
-            <label>Password</label>
-            <input name="password" type="password" ng-model="$ctrl.data.password" required>
-            <div ng-messages="login.password.$error">
-              <div ng-message="required">This is required!</div>
-            </div>
-          </md-input-container>
+            <md-input-container>
+              <label>Email</label>
+              <input name="email" type="email" ng-disabled="$ctrl.loading" ng-model="$ctrl.data.email" required>
+              <div ng-messages="login.email.$error">
+                <div ng-message="required">This is required!</div>
+              </div>
+            </md-input-container>
 
-          <md-input-container>
-            <md-checkbox ng-model="$ctrl.data.remember" aria-label="Remember Me">
-              Remember Me
-            </md-checkbox>
-          </md-input-container>
-        </div>
-      </form>
-    </md-card-content>
+            <md-input-container>
+              <label>Password</label>
+              <input name="password" type="password" ng-disabled="$ctrl.loading" ng-model="$ctrl.data.password" required>
+              <div ng-messages="login.password.$error">
+                <div ng-message="required">This is required!</div>
+              </div>
+            </md-input-container>
 
-    <md-card-actions layout="row" layout-align="end center">
-      <md-button class="md-primary" ng-click="$ctrl.login()" ng-disabled="login.$invalid">Login</md-button>
-    </md-card-actions>
+            <md-input-container>
+              <md-checkbox ng-disabled="$ctrl.loading" ng-model="$ctrl.data.remember" aria-label="Remember Me">
+                Remember Me
+              </md-checkbox>
+            </md-input-container>
+          </div>
+      </md-card-content>
+
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button type="submit" class="md-primary" ng-click="$ctrl.login()" ng-disabled="login.$invalid || $ctrl.loading">Login</md-button>
+      </md-card-actions>
+    </form>
+
   </md-card>
 </div>

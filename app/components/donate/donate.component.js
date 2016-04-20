@@ -13,8 +13,6 @@
   function donateController($log, UtilsService, InvoicesService) {
     const vm = this;
 
-    console.log('user', vm.user);
-
     vm.data = {};
     vm.states = UtilsService.states;
 

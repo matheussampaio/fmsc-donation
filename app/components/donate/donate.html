@@ -11,7 +11,7 @@
         <div layout="column" class="input-row">
           <md-input-container>
             <label>Quantity</label>
-            <input type="number" name="quantity" ng-model="$ctrl.data.quantity" min="1">
+            <input type="number" name="quantity" ng-model="$ctrl.data.quantity" min="1" required>
             <div ng-messages="donate.quantity.$error">
               <div ng-message="required">This is required!</div>
               <div ng-message="min">You should donate at least one.</div>

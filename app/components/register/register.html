@@ -6,66 +6,78 @@
       </md-card-title-text>
     </md-card-title>
 
-    <md-card-content>
-      <form name="register">
-        <div layout="column" class="input-row">
-          <md-input-container>
-            <label>Name</label>
-            <input type="text" name="name" ng-model="$ctrl.data.name" minlength="4" md-maxlength="30" required>
-            <div ng-messages="register.name.$error">
-              <div ng-message="required">This is required!</div>
-              <div ng-message="md-maxlength">That's too long!</div>
-              <div ng-message="minlength">That's too short!</div>
-            </div>
-          </md-input-container>
+    <form name="register">
+      <md-card-content>
+        <div layout="column">
+          <div layout="row" layout-align="center" ng-if="$ctrl.error.show">
+            <span class="fmsc-error md-caption" layout-padding>
+              {{ $ctrl.error.message[$ctrl.error.show] }}
+            </span>
+          </div>
+          <div layout="row">
+            <md-input-container flex='auto'>
+              <label>Name</label>
+              <input type="text" name="name" ng-model="$ctrl.data.name" ng-disabled="$ctrl.loading"  minlength="4" md-maxlength="30" required>
+              <div ng-messages="register.name.$error">
+                <div ng-message="required">This is required!</div>
+                <div ng-message="md-maxlength">That's too long!</div>
+                <div ng-message="minlength">That's too short!</div>
+              </div>
+            </md-input-container>
+            <md-input-container flex='35'>
+              <label>State</label>
+              <md-select ng-model="$ctrl.data.state" ng-disabled="$ctrl.loading" required>
+                <md-option ng-repeat="state in $ctrl.states" value="{{state}}">
+                  {{state}}
+                </md-option>
+              </md-select>
+              <div ng-messages="$register.state.$error">
+                <div ng-message="required">This is required!</div>
+              </div>
+            </md-input-container>
+          </div>
 
-          <md-input-container>
-            <label>State</label>
-            <md-select ng-model="$ctrl.data.state" required>
-              <md-option ng-repeat="state in $ctrl.states" value="{{state}}">
-                {{state}}
-              </md-option>
-            </md-select>
-            <div ng-messages="$register.state.$error">
-              <div ng-message="required">This is required!</div>
-            </div>
-          </md-input-container>
+          <div layout="row">
+            <md-input-container flex='auto'>
+              <label>Email</label>
+              <input name="email" type="email" ng-model="$ctrl.data.email" ng-disabled="$ctrl.loading"  required>
+              <div ng-messages="register.email.$error" role="alert">
+                <div ng-message="required">This is required!</div>
+              </div>
+            </md-input-container>
+            <md-input-container flex='auto'>
+              <label>Confirm Email</label>
+              <input name="confirmEmail" type="email" ng-model="$ctrl.data.confirmEmail" ng-disabled="$ctrl.loading" required>
+              <div ng-messages="register.confirmEmail.$error" role="alert">
+                <div ng-message="required">This is required!</div>
+              </div>
+            </md-input-container>
+          </div>
 
-          <md-input-container>
-            <label>Email</label>
-            <input name="email" type="email" ng-model="$ctrl.data.email" required>
-            <div ng-messages="register.email.$error" role="alert">
-              <div ng-message="required">This is required!</div>
-            </div>
-          </md-input-container>
-          <md-input-container>
-            <label>Confirm Email</label>
-            <input name="confirmEmail" type="email" ng-model="$ctrl.data.confirmEmail" required>
-            <div ng-messages="register.confirmEmail.$error" role="alert">
-              <div ng-message="required">This is required!</div>
-            </div>
-          </md-input-container>
-          <md-input-container>
-            <label>Password</label>
-            <input name="password" type="password" ng-model="$ctrl.data.password" required>
-            <div ng-messages="register.password.$error" role="alert">
-              <div ng-message="required">This is required!</div>
-            </div>
-          </md-input-container>
-          <md-input-container>
-            <label>Confirm Password</label>
-            <input name="confirmPassword" type="password" ng-model="$ctrl.data.confirmPassword" required>
-            <div ng-messages="register.confirmPassword.$error" role="alert">
-              <div ng-message="required">This is required!</div>
-            </div>
-          </md-input-container>
+          <div layout="row">
+            <md-input-container flex='auto'>
+              <label>Password</label>
+              <input name="password" type="password" ng-model="$ctrl.data.password" ng-disabled="$ctrl.loading" required>
+              <div ng-messages="register.password.$error" role="alert">
+                <div ng-message="required">This is required!</div>
+              </div>
+            </md-input-container>
+            <md-input-container flex='auto'>
+              <label>Confirm Password</label>
+              <input name="confirmPassword" type="password" ng-model="$ctrl.data.confirmPassword" ng-disabled="$ctrl.loading" required>
+              <div ng-messages="register.confirmPassword.$error" role="alert">
+                <div ng-message="required">This is required!</div>
+              </div>
+            </md-input-container>
+          </div>
         </div>
-      </form>
-    </md-card-content>
+      </md-card-content>
 
-    <md-card-actions layout="row" layout-align="end center">
-     <md-button class="md-primary" ng-click="$ctrl.register()" ng-disabled="register.$invalid">Register</md-button>
-   </md-card-actions>
-
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button type='submit' class="md-primary" ng-click="$ctrl.register()" ng-disabled="register.$invalid || $ctrl.loading">
+          Register
+        </md-button>
+      </md-card-actions>
+    </form>
   </md-card>
 </div>

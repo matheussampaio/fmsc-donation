@@ -1,4 +1,6 @@
-Project - IT 353
+[![Build Status](https://travis-ci.org/matheussampaio/fmsc-donation.svg?branch=master)](https://travis-ci.org/matheussampaio/fmsc-donation)
+
+FMSC Donation
 ================
 
 # Requirements:
