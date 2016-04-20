@@ -21,7 +21,8 @@
     "jquery": "2.2.3",
     "lodash": "4.9.0",
     "method-override": "2.3.5",
-    "morgan": "1.7.0"
+    "morgan": "1.7.0",
+    "paypal-ipn": "3.0.0"
   },
   "devDependencies": {
     "babel-core": "6.7.6",
