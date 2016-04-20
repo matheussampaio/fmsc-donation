@@ -4,10 +4,11 @@
     .module('fmsc')
     .service('InvoicesService', InvoicesService);
 
-  function InvoicesService(AuthService, FirebaseRef, $firebaseObject) {
+  function InvoicesService($q, AuthService, FirebaseRef, $firebaseObject, $firebaseArray) {
     const service = {
       create,
-      get
+      get,
+      getAllFromUser
     };
 
     return service;
@@ -75,6 +76,10 @@
 
     function get(invoiceId) {
       return $firebaseObject(FirebaseRef.invoices.child(invoiceId));
+    }
+
+    function getAllFromUser(userId) {
+      return $firebaseArray(FirebaseRef.invoices.orderByChild('user').equalTo(userId));
     }
 
   }

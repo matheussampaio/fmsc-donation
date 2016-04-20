@@ -12,6 +12,8 @@
 
   function invoiceController($log) {
     const vm = this;
+
+    $log.debug(vm.invoice);
   }
 
 })();
