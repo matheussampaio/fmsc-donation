@@ -46,6 +46,26 @@
       }
     };
 
+    const invoiceState = {
+      url: 'invoice/:invoiceId',
+      template: '<invoice invoice="invoice"></invoice>',
+      data: {
+        private: true
+      },
+      resolve: {
+        user: (AuthService) => AuthService.getUser(),
+        invoice: (InvoicesService, $stateParams) => InvoicesService.get($stateParams.invoiceId)
+      },
+      /* @ngInject */
+      controller: ($scope, $state, invoice, user) => {
+        $scope.invoice = invoice;
+
+        if (invoice.user !== user.uid) {
+          $state.go('app.home');
+        }
+      }
+    };
+
     const loginState = {
       url: 'login',
       template: '<login></login>',
@@ -68,6 +88,7 @@
       .state('app', appState)
         .state('app.home', homeState)
         .state('app.donate', donateState)
+        .state('app.invoice', invoiceState)
         .state('app.login', loginState)
         .state('app.register', registerState)
         .state('app.admin', adminState);
