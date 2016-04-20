@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const errorHandler = require('errorhandler');
 const methodOverride = require('method-override');
 
+const api = require('./routes/api');
 const index = require('./routes/index');
 
 const app = module.exports = express();
@@ -31,6 +32,9 @@ if (env === 'development') {
 /**
  * Routes
  */
+
+// api
+app.use('/api', api);
 
 // serve index and view partials
 app.all('/*', index.index);
