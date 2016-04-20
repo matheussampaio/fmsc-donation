@@ -4,7 +4,7 @@
     .module('fmsc')
     .service('InvoicesService', InvoicesService);
 
-  function InvoicesService(AuthService, FirebaseRef) {
+  function InvoicesService($q, AuthService, FirebaseRef) {
     const service = {
       create
     };
@@ -21,7 +21,9 @@
         created: Date.now()
       };
 
-      return FirebaseRef.invoices.push(_invoice);
+      return $q(resolve => {
+        FirebaseRef.invoices.push(_invoice).then(resolve);
+      });
 
       // try to reserve the pieces
       // return Promise.all([

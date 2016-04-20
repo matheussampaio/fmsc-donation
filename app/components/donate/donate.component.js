@@ -10,10 +10,11 @@
       }
     });
 
-  function donateController($log, UtilsService, InvoicesService) {
+  function donateController(UtilsService, InvoicesService) {
     const vm = this;
 
     vm.data = {};
+    vm.loading = false;
     vm.states = UtilsService.states;
 
     vm.checkout = checkout;
@@ -28,15 +29,16 @@
     }
 
     function checkout() {
-      $log.debug('checkout');
-      if (vm.data.quantity && vm.data.name && vm.data.state) {
+      if (!vm.loading && vm.data.quantity && vm.data.name && vm.data.state) {
+        vm.loading = true;
+
         InvoicesService.create({
           state: vm.data.state,
           name: vm.data.name,
           quantity: vm.data.quantity
         })
         .then((invoice) => {
-          vm.data.invoiceKey = invoice.key();
+          $('#invoiceKey').val(invoice.key());
           $('#formDonate').submit();
         });
       }
