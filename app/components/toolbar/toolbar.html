@@ -1,47 +1,21 @@
-<md-toolbar md-scroll-shrink="true">
+<md-toolbar layout="row">
   <div class="md-toolbar-tools">
-    <span>FMSC</span>
+    <h2>FMSC</h2>
 
-    <!-- Home -->
-    <md-button
-      ui-sref-active="active"
-      ui-sref="app.home">
-        Home
-    </md-button>
+  <!-- Left Side -->
+  <md-button hide-xs ui-sref-active="active" ui-sref="app.home">Home</md-button>
+  <md-button hide-xs ui-sref-active="active" ui-sref="app.donate">Donate</md-button>
+
+  <span flex></span>
 
 
-    <!-- Donate -->
-    <md-button
-      ui-sref-active="active"
-      ui-sref="app.donate">
-        Donate
-    </md-button>
 
-    <!-- fill up the space between left and right area -->
-    <span flex></span>
 
-    <!-- Login -->
-    <md-button
-      ui-sref-active="active"
-      ui-sref="app.login"
-      ng-hide="$ctrl.auth.user" >
-        Login
-    </md-button>
+  <!-- Right Side -->
+  <md-button class="menu" md-no-ink hide-gt-xs><md-icon>menu</md-icon></md-button>
+  <md-button hide-xs ui-sref-active="active" ui-sref="app.login" ng-if="!$ctrl.auth.user">Login</md-button>
+  <md-button hide-xs ui-sref-active="active" ui-sref="app.register" ng-if="!$ctrl.auth.user">Register</md-button>
+  <md-button hide-xs ng-click="$ctrl.logout()" ng-if="$ctrl.auth.user">Logout</md-button>
 
-    <!-- Register -->
-    <md-button
-      ui-sref-active="active"
-      ui-sref="app.register"
-      ng-hide="$ctrl.auth.user">
-        Register
-    </md-button>
-
-    <!-- Logout -->
-    <md-button
-      ng-click="$ctrl.logout()"
-      ng-show="$ctrl.auth.user">
-        Logout
-    </md-button>
-
-  </div>
+</div>
 </md-toolbar>
