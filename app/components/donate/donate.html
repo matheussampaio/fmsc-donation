@@ -7,11 +7,13 @@
     </md-card-title>
 
     <md-card-content>
-      <form name="donate">
+      <form name="donate" method="post" target="_top" id="formDonate"
+            action="https://www.sandbox.paypal.com/cgi-bin/webscr">
         <div layout="column" class="input-row">
           <md-input-container>
             <label>Quantity</label>
             <input type="number" name="quantity" ng-model="$ctrl.data.quantity" min="1" required>
+            <div class="hint" ng-show="$ctrl.data.quantity">{{ $ctrl.data.quantity * 25 }} meals, $0.22 each</div>
             <div ng-messages="donate.quantity.$error">
               <div ng-message="required">This is required!</div>
               <div ng-message="min">You should donate at least one.</div>
@@ -40,13 +42,14 @@
             </div>
           </md-input-container>
 
-
-          <md-card-actions layout="row" layout-align="end center">
-            <p class="md-body-1" ng-show="$ctrl.data.quantity">Total: {{ $ctrl.data.quantity * 25 * 0.22 | currency }}</p>
-
-            <md-button class="md-primary" ng-click="$ctrl.checkout()">Checkout</md-button>
+          <md-card-actions layout="column" layout-align="center end">
+            <p class="md-body-2" ng-show="$ctrl.data.quantity">Total: {{ $ctrl.data.quantity * 25 * 0.22 | currency }}</p>
+            <md-button class="md-primary md-raised" ng-click="$ctrl.checkout()">Checkout</md-button>
           </md-card-actions>
 
+          <input type="hidden" name="cmd" value="_s-xclick">
+          <input type="hidden" name="hosted_button_id" value="ZSR6EJRA63D2E">
+          <input type="hidden" name="invoice" ng-model="$ctrl.data.invoiceKey">
         </div>
       </form>
     </md-card-content>

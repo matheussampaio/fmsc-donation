@@ -28,6 +28,7 @@
     }
 
     function checkout() {
+      $log.debug('checkout');
       if (vm.data.quantity && vm.data.name && vm.data.state) {
         InvoicesService.create({
           state: vm.data.state,
@@ -35,8 +36,8 @@
           quantity: vm.data.quantity
         })
         .then((invoice) => {
-          vm.invoice = invoice;
-          console.log('invoice', invoice);
+          vm.data.invoiceKey = invoice.key();
+          $('#formDonate').submit();
         });
       }
     }

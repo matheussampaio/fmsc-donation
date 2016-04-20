@@ -20,6 +20,7 @@
         image.onload = () => {
           $log.debug('image onload');
           $scope.drawCanvas = DrawCanvas.create(canvas, image);
+          $scope.drawCanvas.testDraw(true);
         };
 
         canvas.addEventListener('mousemove', showBuyer, false);

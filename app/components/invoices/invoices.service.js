@@ -4,7 +4,7 @@
     .module('fmsc')
     .service('InvoicesService', InvoicesService);
 
-  function InvoicesService(AuthService, ImageService, PiecesService, PromiseHandler) {
+  function InvoicesService(AuthService, FirebaseRef) {
     const service = {
       create
     };
@@ -18,23 +18,24 @@
         quantity,
         status: 'waiting',
         user: AuthService.user.uid,
-        reserved_time: Date.now(),
-        pieces: {}
+        created: Date.now()
       };
 
+      return FirebaseRef.invoices.push(_invoice);
+
       // try to reserve the pieces
-      return Promise.all([
-        ImageService.getAvailable(),
-        ImageService.getReserved()
-      ])
-      .then(() => {
-        return PiecesService.reservePieces({ quantity });
-      })
+      // return Promise.all([
+      //   ImageService.getAvailable(),
+      //   ImageService.getReserved()
+      // ])
+      // .then(() => {
+      //   return PiecesService.reservePieces({ quantity });
+      // })
       // Update the invoice object with the pieces ids and push to firebase
-      .then((pieces) => {
-        console.log('pieces.length', pieces.length);
-        console.log('_invoice.pieces before:', Object.keys(_invoice.pieces).length);
-      });
+      // .then((pieces) => {
+      //   console.log('pieces.length', pieces.length);
+      //   console.log('_invoice.pieces before:', Object.keys(_invoice.pieces).length);
+      // });
         //   pieces.forEach((piece) => {
         //     if (_invoice.pieces[piece]) {
         //       console.error('invoice already contains', piece);
