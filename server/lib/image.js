@@ -7,7 +7,7 @@ class Image {
     console.log('constructor');
     this.MAX_ROWS = 160;
     this.MAX_COLUMNS = 250;
-    this.IMAGE_FILENAME = 'images-2.jpg';
+    this.IMAGE_FILENAME = 'images.jpg';
     this.ROOT_URL = 'https://fmsc-donation-debug.firebaseio.com';
     // this.ROOT_URL = 'https://fmsc-donation1.firebaseio.com';
 

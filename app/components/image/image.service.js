@@ -57,7 +57,7 @@
 
       return getCurrentImageId()
         .then((imageId) => {
-          const url = `${FirebaseRef.url}/images/${imageId}/url`;
+          const url = `${FirebaseRef.url}/images/${imageId}/filename`;
           return $firebaseObject(new Firebase(url)).$loaded();
         })
         .then((obj) => {
