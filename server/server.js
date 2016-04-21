@@ -5,7 +5,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const errorHandler = require('errorhandler');
 const methodOverride = require('method-override');
-
 const api = require('./routes/api');
 const index = require('./routes/index');
 
@@ -23,7 +22,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(methodOverride());
 
-var env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'development';
 
 if (env === 'development') {
   app.use(errorHandler());
@@ -46,6 +45,9 @@ app.all('/*', index.index);
 /**
  * Start Server
  */
-http.createServer(app).listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + app.get('port'));
+
+process.on('image_loaded', () => {
+  http.createServer(app).listen(app.get('port'), () => {
+    console.log(`Express server listening on port ${app.get('port')}`);
+  });
 });

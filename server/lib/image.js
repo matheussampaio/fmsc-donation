@@ -17,7 +17,7 @@ class Image {
     this.ref = new Firebase(this.ROOT_URL);
 
     this._init().then(() => {
-      console.log('image initialization finished');
+      process.emit('image_loaded');
     });
   }
 
@@ -29,6 +29,7 @@ class Image {
       return this._getInvoice(invoiceId).then(invoice => {
         const quantity = invoice.quantity;
         const selectPieces = _.sampleSize(_.keys(this.imageData.pieces_available), quantity);
+        const soldPieces = [];
 
         if (!this.imageData.pieces_sold) {
           this.imageData.pieces_sold = {};
@@ -41,15 +42,28 @@ class Image {
           piece.name = invoice.name;
           piece.timestamp = invoice.created;
 
-          this.imageData.pieces_sold[key] = piece;
+          soldPieces.push({ key, piece });
+        });
 
-          delete this.imageData.pieces_available[key];
+        const updatePieces = new PromiseManager({
+          resource: soldPieces,
+          fn: (data) => {
+            return Promise.all([
+              // remove from available
+              this.imageRef.child('pieces_available').child(data.key).remove(),
+              // add to sold
+              this.imageRef.child('pieces_sold').child(data.key).set(data.piece)
+            ]);
+          }
         });
 
         return Promise.all([
-          this.imageRef.set(this.imageData),
+          updatePieces.start(),
           this._updateInvoice(invoiceId, selectPieces)
-        ]);
+        ])
+        .then(() => {
+          console.log('invoice handler finished', invoice);
+        });
       });
     }
 
@@ -57,7 +71,7 @@ class Image {
   }
 
   _updateInvoice(invoiceId, piecesIds) {
-    console.log('_updateInvoice', invoiceId, piecesIds);
+    console.log('_updateInvoice');
     return this.ref.child('invoices').child(invoiceId).update({
       pieces: piecesIds,
       status: 'paid'
@@ -65,7 +79,7 @@ class Image {
   }
 
   _getInvoice(id) {
-    console.log('_getInvoice', id);
+    console.log('_getInvoice');
     return this.ref.child('invoices').child(id).once('value').then(value => value.val());
   }
 
@@ -98,6 +112,23 @@ class Image {
     console.log('_loadImage');
     return this.imageRef.once('value').then(image => {
       this.imageData = image.val();
+
+      let avaiableSize = 0;
+      let soldSize = 0;
+
+      if (this.imageData.pieces_available) {
+        avaiableSize = _.keys(this.imageData.pieces_available).length;
+      }
+
+      if (this.imageData.pieces_sold) {
+        soldSize = _.keys(this.imageData.pieces_sold).length;
+      }
+
+      console.log({
+        filename: this.imageData.filename,
+        pieces_available: avaiableSize,
+        pieces_sold: soldSize
+      });
 
       return Promise.resolve();
     });
