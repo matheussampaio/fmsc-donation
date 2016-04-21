@@ -14,7 +14,7 @@
         <div layout="column" class="input-row">
           <md-input-container>
             <label>Quantity</label>
-            <input type="number" name="quantity" ng-disabled="$ctrl.loading"  ng-model="$ctrl.data.quantity" min="1" required>
+            <input type="number" name="quantity" ng-readonly="$ctrl.loading" ng-model="$ctrl.data.quantity" min="1" required>
             <div class="hint" ng-show="$ctrl.data.quantity">{{ $ctrl.data.quantity * 25 }} meals, $0.22 each</div>
             <div ng-messages="donate.quantity.$error">
               <div ng-message="required">This is required!</div>
@@ -24,7 +24,7 @@
 
           <md-input-container>
             <label>Name</label>
-            <input type="text" name="name" ng-disabled="$ctrl.loading" ng-model="$ctrl.data.name" minlength="4" md-maxlength="30" required>
+            <input type="text" name="name" ng-readonly="$ctrl.loading" ng-model="$ctrl.data.name" minlength="4" md-maxlength="30" required>
             <div ng-messages="donate.name.$error">
               <div ng-message="required">This is required!</div>
               <div ng-message="md-maxlength">That's too long!</div>
@@ -34,7 +34,7 @@
 
           <md-input-container>
             <label>State</label>
-            <md-select ng-disabled="$ctrl.loading" ng-model="$ctrl.data.state" required>
+            <md-select ng-readonly="$ctrl.loading" ng-model="$ctrl.data.state" required>
               <md-option ng-repeat="state in $ctrl.states" value="{{state}}">
                 {{state}}
               </md-option>
@@ -49,10 +49,10 @@
             <md-button class="md-primary md-raised" ng-click="$ctrl.checkout()" ng-disabled="donate.$invalid || $ctrl.loading">Checkout</md-button>
           </md-card-actions>
 
-          <!-- <input type="hidden" name="notify_url" value="https://fmscdonation.localtunnel.me/api/notification"/> -->
+          <input type="hidden" name="notify_url" value="https://fmscdonation.localtunnel.me/api/notification"/>
           <input type="hidden" name="cmd" value="_s-xclick">
           <input type="hidden" name="hosted_button_id" value="ZSR6EJRA63D2E">
-          <input id="invoiceKey" type="hidden" name="invoice">
+          <input type="hidden" name="invoice" id="invoiceKey">
         </div>
       </form>
     </md-card-content>
