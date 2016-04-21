@@ -4,7 +4,7 @@
     .module('fmsc')
     .directive('millionCanvas', millionCanvasDirective);
 
-  function millionCanvasDirective($log, DrawCanvas) {
+  function millionCanvasDirective($log, DrawCanvas, ImageService) {
     return {
       controller: millionCanvasController,
       controllerAs: '$ctrl',
@@ -14,43 +14,48 @@
       },
       link: ($scope, $element) => {
         const image = new Image();
-        const canvas = $element[0].children[1];
+        const canvas = $element[0].children[0];
 
-        image.src = 'assets/images/image.jpg';
-        image.onload = () => {
-          $log.debug('image onload');
-          $scope.drawCanvas = DrawCanvas.create(canvas, image);
-          $scope.drawCanvas.testDraw(true);
-        };
+        ImageService.getFilename().then((filename) => {
+          $log.debug(`filename: ${filename}`);
+          image.src = `assets/images/${filename}`;
+          image.onload = () => {
+            $log.debug('image onload');
+            $scope.drawCanvas = DrawCanvas.create(canvas, image);
 
-        canvas.addEventListener('mousemove', showBuyer, false);
+            ImageService.register({
+              id: 'drawCanvas',
+              resource: 'sold',
+              fn: ({ key }) => {
+                ImageService.getSold().then((sold) => {
+                  $scope.drawCanvas.drawOne(sold.$getRecord(key));
+                });
+              }
+            });
 
-        function showBuyer(e) {
-          const r = canvas.getBoundingClientRect();
-          const mouseX = (e.clientX - r.left) / (r.right - r.left) * canvas.width;
-          const mouseY = (e.clientY - r.top) / (r.bottom - r.top) * canvas.height;
-          const pieceX = Math.floor(mouseX / 5);
-          const pieceY = Math.floor(mouseY / 5);
+            ImageService.getSold().then((sold) => {
+              $scope.drawCanvas.draw(sold);
+            });
+          };
+        });
 
-          $log.debug(`pieceX : ${pieceX} pieceY : ${pieceY}`);
-        }
+        // canvas.addEventListener('mousemove', showBuyer, false);
+        //
+        // function showBuyer(e) {
+        //   const r = canvas.getBoundingClientRect();
+        //   const mouseX = (e.clientX - r.left) / (r.right - r.left) * canvas.width;
+        //   const mouseY = (e.clientY - r.top) / (r.bottom - r.top) * canvas.height;
+        //   const pieceX = Math.floor(mouseX / 5);
+        //   const pieceY = Math.floor(mouseY / 5);
+        //
+        //   $log.debug(`pieceX : ${pieceX} pieceY : ${pieceY}`);
+        // }
       }
     };
   }
 
-  function millionCanvasController($log, $scope) {
-    const vm = this;
-
-    let lastX = 0;
-    let lastY = 0;
-
-    vm.newPieces = newPieces;
-
-    function newPieces() {
-      $log.debug('new pieces');
-
-      $scope.drawCanvas.drawOne({ x: lastX++, y: lastY++ });
-    }
+  function millionCanvasController() {
+    // const vm = this;
   }
 
 })();
