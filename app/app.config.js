@@ -7,15 +7,20 @@
   function fmscRun($state, $rootScope, AuthService) {
     $rootScope.$on('$stateChangeStart', (event, toState) => {
 
-      // if already authenticated...
       const isAuthenticated = AuthService.isAuthenticated();
-      // any public action is allowed
       const isPrivateAction = angular.isObject(toState.data) && toState.data.private === true;
+      const isPublicOnlyAction = angular.isObject(toState.data) && toState.data.publicOnly === true;
 
-      if (!isAuthenticated && isPrivateAction) {
-        event.preventDefault();
-
-        $state.go('app.login', { from: toState.name });
+      if (isAuthenticated) {
+        if (isPublicOnlyAction) {
+          event.preventDefault();
+          $state.go('app.home');
+        }
+      } else {
+        if (isPrivateAction) {
+          event.preventDefault();
+          $state.go('app.login', { from: toState.name });
+        }
       }
     });
   }
@@ -85,6 +90,9 @@
     const loginState = {
       url: 'login',
       template: '<login></login>',
+      data: {
+        publicOnly: true
+      },
       params: {
         from: 'app.home'
       }
@@ -92,6 +100,9 @@
 
     const registerState = {
       url: 'register',
+      data: {
+        publicOnly: true
+      },
       template: '<register></register>'
     };
 
