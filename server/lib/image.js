@@ -48,7 +48,7 @@ class Image {
 
         return Promise.all([
           this.imageRef.set(this.imageData),
-          this.updateInvoice(invoiceId, selectPieces)
+          this._updateInvoice(invoiceId, selectPieces)
         ]);
       });
     }
