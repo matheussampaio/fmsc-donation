@@ -4,7 +4,7 @@
     .module('fmsc')
     .service('ImageService', ImageService);
 
-  function ImageService($q, $firebaseObject, FirebaseRef) {
+  function ImageService($q, $firebaseObject, $firebaseArray, FirebaseRef) {
     const service = {
       imageId: null,
       filename: null,
@@ -89,7 +89,7 @@
     function _initResource(resource) {
       return $q.when(getCurrentImageId().then((imageId) => {
         const url = `${FirebaseRef.url}/images/${imageId}/${resource}`;
-        const ref = $firebaseObject(new Firebase(url));
+        const ref = $firebaseArray(new Firebase(url));
 
         return ref;
       }));
@@ -106,8 +106,8 @@
     }
 
     function destroySold() {
-      service.sodl.$destroy();
-      service.sodl = null;
+      service.sold.$destroy();
+      service.sold = null;
     }
 
   }
