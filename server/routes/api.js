@@ -1,8 +1,8 @@
 const express = require('express');
 const api = express();
 
-const paypal = require('../models/paypal');
+const donation = require('../lib/donation');
 
-api.use('/notification', paypal);
+api.use('/notification', donation);
 
 module.exports = api;

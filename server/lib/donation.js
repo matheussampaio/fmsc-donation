@@ -1,8 +1,10 @@
 const ipn = require('paypal-ipn');
 const express = require('express');
-const paypal = express();
+const donation = express();
 
-paypal.post('/', (req, res) => {
+const Image = require('./image');
+
+donation.post('/', (req, res) => {
   res.status(200).send();
   ipn.verify(req.body, { allow_sandbox: true }, (error, response) => {
     if (!error) {
@@ -14,7 +16,7 @@ paypal.post('/', (req, res) => {
 });
 
 function handlePayment(argv) {
-  console.log(argv);
+  Image.handle(argv);
 }
 
-module.exports = paypal;
+module.exports = donation;
