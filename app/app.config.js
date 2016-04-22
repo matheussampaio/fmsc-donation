@@ -11,6 +11,8 @@
       const isPrivateAction = angular.isObject(toState.data) && toState.data.private === true;
       const isPublicOnlyAction = angular.isObject(toState.data) && toState.data.publicOnly === true;
 
+      console.log({ isAuthenticated, isPrivateAction, isPublicOnlyAction });
+
       if (isAuthenticated) {
         if (isPublicOnlyAction) {
           event.preventDefault();

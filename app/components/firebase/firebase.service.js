@@ -4,10 +4,10 @@
     .module('fmsc')
     .service('FirebaseRef', FirebaseRef);
 
-  function FirebaseRef($window, $firebaseAuth, $firebaseObject, $firebaseArray, DEBUGFirebaseURL) {
+  function FirebaseRef($window, $firebaseAuth, $firebaseObject, $firebaseArray, FirebaseURL) {
     const Firebase = $window.Firebase;
 
-    const URL = DEBUGFirebaseURL;
+    const URL = FirebaseURL;
 
     const service = {
       url: URL,

@@ -10,9 +10,10 @@
       }
     });
 
-  function donateController(UtilsService, InvoicesService) {
+  function donateController(UtilsService, InvoicesService, FMSCDebug) {
     const vm = this;
 
+    vm.debugMode = FMSCDebug;
     vm.data = {};
     vm.loading = false;
     vm.states = UtilsService.states;

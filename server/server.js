@@ -22,9 +22,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(methodOverride());
 
-const env = process.env.NODE_ENV || 'development';
-
-if (env === 'development') {
+if (!process.env.FMSC_RELEASE) {
   app.use(errorHandler());
 }
 

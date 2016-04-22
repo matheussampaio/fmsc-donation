@@ -8,8 +8,12 @@ class Image {
     this.MAX_ROWS = 160;
     this.MAX_COLUMNS = 250;
     this.IMAGE_FILENAME = 'image.jpg';
-    this.ROOT_URL = 'https://fmsc-donation-debug.firebaseio.com';
-    // this.ROOT_URL = 'https://fmsc-donation1.firebaseio.com';
+
+    if (process.env.FMSC_RELEASE) {
+      this.ROOT_URL = 'https://fmsc-donation1.firebaseio.com';
+    } else {
+      this.ROOT_URL = 'https://fmsc-donation-debug.firebaseio.com';
+    }
 
     this.currentImage = null;
     this.imageRef = null;
