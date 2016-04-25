@@ -54,8 +54,10 @@
     };
   }
 
-  function millionCanvasController() {
-    // const vm = this;
+  function millionCanvasController($scope, ImageService) {
+    const vm = this;
+
+    vm.ImageService = ImageService;
   }
 
 })();

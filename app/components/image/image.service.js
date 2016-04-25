@@ -41,7 +41,7 @@
 
     function getCurrentImageId() {
       if (service.imageId) {
-        return Promise.resolve(service.imageId);
+        return $q.resolve(service.imageId);
       }
 
       return FirebaseRef.current_image.$loaded().then(obj => {
@@ -52,7 +52,7 @@
 
     function getFilename() {
       if (service.filename) {
-        return Promise.resolve(service.filename);
+        return $q.resolve(service.filename);
       }
 
       return getCurrentImageId()
@@ -69,7 +69,7 @@
 
     function getSold() {
       if (service.sold) {
-        return Promise.resolve(service.sold);
+        return $q.resolve(service.sold);
       } else if (service.loadingSold) {
         return service.loadingSold;
       }
@@ -87,12 +87,12 @@
     }
 
     function _initResource(resource) {
-      return $q.when(getCurrentImageId().then((imageId) => {
+      return getCurrentImageId().then((imageId) => {
         const url = `${FirebaseRef.url}/images/${imageId}/${resource}`;
         const ref = $firebaseArray(new Firebase(url));
 
         return ref;
-      }));
+      });
     }
 
     function _eventHandler(resource, event) {
