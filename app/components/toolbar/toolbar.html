@@ -1,19 +1,45 @@
-<md-toolbar layout="row">
-  <div class="md-toolbar-tools">
+<md-content md-padding layout="column">
+  <md-toolbar class="md-toolbar-tools" layout="row">
     <h2>FMSC</h2>
 
     <!-- Left Side -->
     <md-button hide-xs ui-sref-active="active" ui-sref="app.home">Home</md-button>
     <md-button hide-xs ui-sref-active="active" ui-sref="app.donate">Donate</md-button>
-    <md-button hide-xs ui-sref-active="active" ui-sref="app.invoice">Invoices</md-button>
 
     <span flex></span>
 
     <!-- Right Side -->
-    <md-button class="md-icon-button" md-no-ink hide-gt-xs><md-icon>menu</md-icon></md-button>
     <md-button hide-xs ui-sref-active="active" ui-sref="app.login" ng-if="!$ctrl.auth.user">Login</md-button>
     <md-button hide-xs ui-sref-active="active" ui-sref="app.register" ng-if="!$ctrl.auth.user">Register</md-button>
-    <md-button hide-xs ng-click="$ctrl.logout()" ng-if="$ctrl.auth.user">Logout</md-button>
 
-  </div>
-</md-toolbar>
+    <md-fab-speed-dial ng-if="$ctrl.auth.user" md-open="$ctrl.isOpen" ng-mouseenter="$ctrl.isOpen = true"
+      ng-mouseleave="$ctrl.isOpen = false" md-direction="left" class="md-scale">
+      <md-fab-trigger>
+        <md-button aria-label="Settings" class="md-fab md-raised md-mini">
+          <md-icon class="icon-cog"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-fab-actions>
+        <md-button aria-label="Profile" class="md-fab md-raised md-mini">
+          <md-tooltip md-direction="down">
+            Profile
+          </md-tooltip>
+          <md-icon class="icon-user"></md-icon>
+        </md-button>
+        <md-button aria-label="Invoices" class="md-fab md-raised md-mini"
+          ui-sref-active="active" ui-sref="app.invoice">
+          <md-tooltip md-direction="down">
+            Invoices
+          </md-tooltip>
+          <md-icon class="icon-coin-dollar"></md-icon>
+        </md-button>
+        <md-button aria-label="Logout" ng-click="$ctrl.logout()" class="md-fab md-raised md-mini">
+          <md-tooltip md-direction="down">
+            Logout
+          </md-tooltip>
+          <md-icon class="icon-exit"></md-icon>
+        </md-button>
+      </md-fab-actions>
+    </md-fab-speed-dial>
+  </md-toolbar>
+</md-content>

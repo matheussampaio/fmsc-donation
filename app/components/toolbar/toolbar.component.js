@@ -11,8 +11,8 @@
     const vm = this;
 
     vm.auth = AuthService;
-
     vm.logout = logout;
+    vm.isOpen = true;
 
     ////////////////
 
