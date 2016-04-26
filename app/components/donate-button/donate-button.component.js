@@ -7,10 +7,8 @@
       templateUrl: 'donate-button/donate-button.html'
     });
 
-  function donateButtonController($log) {
-    // const vm = this;
+  function donateButtonController() {
 
-    $log.debug('donate-button');
   }
 
 })();

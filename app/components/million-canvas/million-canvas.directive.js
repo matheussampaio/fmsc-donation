@@ -4,7 +4,7 @@
     .module('fmsc')
     .directive('millionCanvas', millionCanvasDirective);
 
-  function millionCanvasDirective($log, DrawCanvas, ImageService) {
+  function millionCanvasDirective($log, DrawCanvas, ImageService, TooltipService) {
     return {
       controller: millionCanvasController,
       controllerAs: '$ctrl',
@@ -29,27 +29,35 @@
               fn: ({ key }) => {
                 ImageService.getSold().then((sold) => {
                   $scope.drawCanvas.drawOne(sold.$getRecord(key));
+                  TooltipService.setBuyer(sold.$getRecord(key));
                 });
               }
             });
 
             ImageService.getSold().then((sold) => {
               $scope.drawCanvas.draw(sold);
+              TooltipService.setBuyers(sold);
             });
           };
         });
 
-        // canvas.addEventListener('mousemove', showBuyer, false);
-        //
-        // function showBuyer(e) {
-        //   const r = canvas.getBoundingClientRect();
-        //   const mouseX = (e.clientX - r.left) / (r.right - r.left) * canvas.width;
-        //   const mouseY = (e.clientY - r.top) / (r.bottom - r.top) * canvas.height;
-        //   const pieceX = Math.floor(mouseX / 5);
-        //   const pieceY = Math.floor(mouseY / 5);
-        //
-        //   $log.debug(`pieceX : ${pieceX} pieceY : ${pieceY}`);
-        // }
+        canvas.addEventListener('mousemove', showBuyer, false);
+        canvas.addEventListener('mouseleave', hideBuyer, false);
+
+        function showBuyer(e) {
+          const r = canvas.getBoundingClientRect();
+          const mouseX = (e.clientX - r.left) / (r.right - r.left) * canvas.width;
+          const mouseY = (e.clientY - r.top) / (r.bottom - r.top) * canvas.height;
+          const pieceX = Math.floor(mouseX / 5);
+          const pieceY = Math.floor(mouseY / 5);
+
+          TooltipService.setMessage(pieceX, pieceY);
+          TooltipService.setPosition(e.pageX, e.pageY);
+        }
+
+        function hideBuyer() {
+          TooltipService.hideElement();
+        }
       }
     };
   }

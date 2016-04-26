@@ -1,11 +1,11 @@
 <div layout="row" layout-align="center" class="ng-cloak">
   <md-card flex="100" flex-gt-xs="50">
     <md-card-content layout="row" layout-align="center">
-      <span ng-hide="$ctrl.ImageService.sold">Loading...</span>
-      <span ng-show="$ctrl.ImageService.sold" class="animated fadeIn">{{ $ctrl.ImageService.sold.length * 25 | number }} ({{ $ctrl.ImageService.sold.length / 400 }}%) meals donated. </span>
+      <span ng-if="!$ctrl.ImageService.sold">Loading...</span>
+      <span ng-if="$ctrl.ImageService.sold" class="animated fadeIn">{{ $ctrl.ImageService.sold.length * 25 | number }} ({{ $ctrl.ImageService.sold.length / 400 }}%) meals donated. </span>
     </md-card-content>
 
-    <md-progress-linear ng-if="$ctrl.loading" md-mode="query"></md-progress-linear>
-    <md-progress-linear ng-if="!$ctrl.loading" md-mode="determinate" value="{{ $ctrl.ImageService.sold.length / 400 }}" />
+    <md-progress-linear ng-if="!$ctrl.ImageService.sold" md-mode="query"></md-progress-linear>
+    <md-progress-linear ng-if="$ctrl.ImageService.sold" md-mode="determinate" value="{{ $ctrl.ImageService.sold.length / 400 }}" />
   </md-card>
 </div>
