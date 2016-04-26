@@ -53,6 +53,21 @@
       }
     };
 
+    const profileState = {
+      url: 'profile',
+      template: '<profile user="user"></profile>',
+      data: {
+        private: true
+      },
+      resolve: {
+        user: (AuthService) => AuthService.getUser()
+      },
+      /* @ngInject */
+      controller: ($scope, user) => {
+        $scope.user = user;
+      }
+    };
+
     const invoiceState = {
       url: 'invoice',
       template: '<invoice invoice="invoice"></invoice>',
@@ -112,6 +127,7 @@
       .state('app', appState)
         .state('app.home', homeState)
         .state('app.donate', donateState)
+        .state('app.profile', profileState)
         .state('app.invoice', invoiceState)
         .state('app.invoiceDetails', invoiceDetailsState)
         .state('app.login', loginState)

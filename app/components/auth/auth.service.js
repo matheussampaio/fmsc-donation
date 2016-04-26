@@ -49,6 +49,7 @@
 
           const user = snapshot.val();
           user.uid = auth.uid;
+          user.email = auth.password.email;
 
           return resolve(user);
         });

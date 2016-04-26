@@ -12,7 +12,7 @@
 
     vm.auth = AuthService;
     vm.logout = logout;
-    vm.isOpen = true;
+    vm.isOpen = false;
 
     ////////////////
 
