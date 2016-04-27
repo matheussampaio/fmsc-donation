@@ -51,10 +51,16 @@
       };
     }
 
-    function setPosition(x = 0, y = 0) {
+    function setPosition(pageX = 0, pageY = 0) {
+      const pageWidth = angular.element(document).find('body').width();
+
+      if (pageWidth < (pageX + 200)) {
+        pageX -= 200;
+      }
+
       if (_tooltipElement) {
-        _tooltipElement.style.left = `${x}px`;
-        _tooltipElement.style.top = `${y - 50}px`;
+        _tooltipElement.style.left = `${pageX}px`;
+        _tooltipElement.style.top = `${pageY - 32}px`;
       }
     }
 
