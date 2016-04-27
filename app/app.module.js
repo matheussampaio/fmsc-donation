@@ -5,6 +5,7 @@
     'ngMaterial',
     'ui.router',
     'firebase',
+    'datamaps',
     'Lodash'
   ]);
 

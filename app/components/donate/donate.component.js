@@ -16,7 +16,7 @@
     vm.debugMode = FMSCDebug;
     vm.data = {};
     vm.loading = false;
-    vm.states = UtilsService.states;
+    vm.states = UtilsService.statesNames;
 
     vm.checkout = checkout;
     vm.$onInit = $onInit;

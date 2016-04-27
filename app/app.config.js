@@ -11,8 +11,6 @@
       const isPrivateAction = angular.isObject(toState.data) && toState.data.private === true;
       const isPublicOnlyAction = angular.isObject(toState.data) && toState.data.publicOnly === true;
 
-      console.log({ isAuthenticated, isPrivateAction, isPublicOnlyAction });
-
       if (isAuthenticated) {
         if (isPublicOnlyAction) {
           event.preventDefault();
@@ -123,6 +121,11 @@
       template: '<register></register>'
     };
 
+    const rankingState = {
+      url: 'ranking',
+      template: '<ranking></ranking>'
+    };
+
     $stateProvider
       .state('app', appState)
         .state('app.home', homeState)
@@ -131,7 +134,8 @@
         .state('app.invoice', invoiceState)
         .state('app.invoiceDetails', invoiceDetailsState)
         .state('app.login', loginState)
-        .state('app.register', registerState);
+        .state('app.register', registerState)
+        .state('app.ranking', rankingState);
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/home');

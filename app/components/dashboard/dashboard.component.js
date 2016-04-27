@@ -7,7 +7,7 @@
       templateUrl: 'dashboard/dashboard.html'
     });
 
-  function dashboardController($scope, ImageService) {
+  function dashboardController(ImageService) {
     const vm = this;
 
     vm.ImageService = ImageService;

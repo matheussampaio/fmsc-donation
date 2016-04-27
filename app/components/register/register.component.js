@@ -11,7 +11,7 @@
     const vm = this;
 
     vm.loading = false;
-    vm.states = UtilsService.states;
+    vm.states = UtilsService.statesNames;
     vm.data = {
       email: null,
       confirmEmail: null,
