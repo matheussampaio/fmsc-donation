@@ -8,3 +8,33 @@
 .statename {
   font-weight: bold;
 }
+
+.legend {
+  width: 100px;
+  text-align: left;
+
+  .legend-title {
+    position: relative;
+    top: -18px;
+    left: -15px;
+  }
+
+  &.type0 {
+    background-color: #dddddd;
+  }
+  &.type1 {
+    background-color: #c6dbef;
+  }
+  &.type2 {
+    background-color: #9ecae1;
+  }
+  &.type3 {
+    background-color: #6baed6;
+  }
+  &.type4 {
+    background-color: #3182bd;
+  }
+  &.type5 {
+    background-color: #08519c;
+  }
+}

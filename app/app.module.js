@@ -6,6 +6,7 @@
     'ui.router',
     'firebase',
     'datamaps',
+    '720kb.socialshare',
     'Lodash'
   ]);
 

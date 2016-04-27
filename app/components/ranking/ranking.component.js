@@ -40,11 +40,11 @@
       fills: {
         5: '#08519c',
         4: '#3182bd',
-        3: '#306596',
-        2: '#6baed6',
-        1: '#bdd7e7',
-        0: '#DDDDDD',
-        defaultFill: '#DDDDDD'
+        3: '#6baed6',
+        2: '#9ecae1',
+        1: '#c6dbef',
+        0: '#dddddd',
+        defaultFill: '#dddddd'
       },
       data: {}
     };
@@ -106,15 +106,15 @@
     function _getColor(num) {
       if (num <= 0) {
         return '0';
-      } else if (num <= 0.2) {
+      } else if (num < 0.2) {
         return '1';
-      } else if (num <= 0.4) {
+      } else if (num < 0.4) {
         return '2';
-      } else if (num <= 0.6) {
+      } else if (num < 0.6) {
         return '3';
-      } else if (num <= 0.8) {
+      } else if (num < 0.8) {
         return '4';
-      } else if (num <= 1) {
+      } else if (num < 1) {
         return '5';
       }
 

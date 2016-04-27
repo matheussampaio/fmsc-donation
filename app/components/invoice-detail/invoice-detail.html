@@ -11,5 +11,24 @@
      <p>Quantity: {{ $ctrl.invoice.quantity }}</p>
      <p>Status: {{ $ctrl.invoice.status }}</p>
      <p>Created: {{ $ctrl.invoice.created | date:'yyyy-MM-dd HH:mm:ss' }}</p>
+
+     <div layout="row" ng-if="$ctrl.invoice.status === 'paid'">
+       <md-button class="md-primary" socialshare
+         socialshare-provider="facebook"
+         socialshare-type="feed"
+         socialshare-url="http://fmsc-donation.herokuapp.com"
+         socialshare-text="FMSC Donation"
+         socialshare-description="I donated {{ $ctrl.invoice.quantity * 25 }} meals to FMSC Donation!">
+         SHARE ON FACEBOOK
+       </md-button>
+
+       <md-button class="md-primary" socialshare
+         socialshare-provider="twitter"
+         socialshare-url="http://fmsc-donation.herokuapp.com"
+         socialshare-description="I donated {{ $ctrl.invoice.quantity * 25 }} meals to FMSC Donation!"
+         socialshare-hashtags="fmscdonation">
+         SHARE ON TWITTER
+       </md-button>
+     </div>
    </md-card-content>
 </md-card>
