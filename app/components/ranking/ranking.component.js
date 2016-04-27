@@ -28,7 +28,9 @@
       responsive: true,
       staticGeoData: true,
       geographyConfig: {
+        highlightFillColor: '#FF4081',
         highlighBorderColor: '#3F51B5',
+        highlightBorderOpacity: 1,
         highlighBorderWidth: 2,
         popupTemplate: (geography, data) => {
           return `<div class="hoverinfo"><span class="statename">${geography.properties.name}</span>
@@ -47,13 +49,6 @@
       },
       data: {}
     };
-
-    vm.mapPlugins = {
-      labels: (...argv) => {
-        
-      }
-    };
-    vm.mapPluginsData = {};
 
     function $onInit() {
       const ref = FirebaseRef.invoices.orderByChild('status').equalTo('paid');

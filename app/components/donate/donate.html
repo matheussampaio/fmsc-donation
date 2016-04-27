@@ -46,7 +46,7 @@
 
           <md-card-actions layout="column" layout-align="center end">
             <p class="md-body-2" ng-show="$ctrl.data.quantity">Total: {{ $ctrl.data.quantity * 25 * 0.22 | currency }}</p>
-            <md-button class="md-primary md-raised" ng-click="$ctrl.checkout()" ng-disabled="donate.$invalid || $ctrl.loading">Checkout</md-button>
+            <md-button class="md-accent md-raised" ng-click="$ctrl.checkout()" ng-disabled="donate.$invalid || $ctrl.loading">Checkout</md-button>
           </md-card-actions>
 
           <!-- Heroku Debug -->
