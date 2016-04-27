@@ -8,7 +8,7 @@
     const _auth = FirebaseRef.auth;
 
     const service = {
-      user: getUser(),
+      user: _auth.$getAuth(),
       getUser,
       login,
       logout,

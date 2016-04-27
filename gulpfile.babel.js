@@ -47,7 +47,8 @@ gulp.task('build:templates', () => {
   })
   .pipe(plugins.plumber())
   .pipe(plugins.angularTemplatecache('templates.js', {
-    module: config.appName
+    module: config.appName,
+    base: (file) => file.relative.split(path.sep).slice(-2).join(path.sep)
   }))
   .pipe(gulp.dest('www/app/'))
   .pipe(browserSync.stream());

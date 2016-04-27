@@ -1,0 +1,6 @@
+<md-progress-linear ng-if="$ctrl.loading" md-mode="indeterminate"></md-progress-linear>
+
+<md-content ng-if="!$ctrl.loading" layout="column" layout-align="center" layout-margin layout-padding>
+  <invoice-detail ng-repeat="invoice in $ctrl.invoices" invoice="invoice">
+  </invoice-detail>
+</md-content>
