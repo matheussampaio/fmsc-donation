@@ -15,7 +15,20 @@
   </head>
   <body ng-app="fmsc" ng-strict-di layout="column">
 
-    <ui-view></ui-view>
+    <header>
+      <toolbar></toolbar>
+      <loading></loading>
+    </header>
+
+    <div ui-view></div>
+
+    <donate-button></donate-button>
+
+    <footer>
+        <small>
+          Every donation goes to <a href="https://www.fmsc.org/">Feed My Starving Children</a> organization.
+        </small>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
