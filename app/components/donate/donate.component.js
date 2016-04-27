@@ -39,8 +39,8 @@
           quantity: vm.data.quantity
         })
         .then((invoice) => {
-          $('#invoiceKey').val(invoice.key());
-          $('#formDonate').submit();
+          angular.element(document).find('#invoiceKey').val(invoice.key());
+          angular.element(document).find('#formDonate').submit();
         });
       }
     }

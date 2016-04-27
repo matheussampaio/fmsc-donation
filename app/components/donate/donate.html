@@ -51,9 +51,11 @@
 
           <!-- Heroku Debug -->
           <input type="hidden" ng-if="$ctrl.debugMode" name="notify_url" value="http://fmsc-donation-debug.herokuapp.com/api/notification"/>
+          <input type="hidden" ng-if="$ctrl.debugMode" name="return" value="http://fmsc-donation-debug.herokuapp.com/#/invoices"/>
 
           <!-- Heroku Release -->
           <input type="hidden" ng-if="!$ctrl.debugMode" name="notify_url" value="http://fmsc-donation.herokuapp.com/api/notification"/>
+          <input type="hidden" ng-if="!$ctrl.debugMode" name="return" value="http://fmsc-donation.herokuapp.com/#/invoices"/>
 
           <!-- Localhost -->
           <!-- <input type="hidden" ng-if="!$ctrl.debugMode" name="notify_url" value="https://fmscdonation.localtunnel.me/api/notification"/> -->
