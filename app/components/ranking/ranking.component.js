@@ -7,7 +7,7 @@
       templateUrl: 'ranking/ranking.html'
     });
 
-  function rankingController($firebaseArray, _, UtilsService, FirebaseRef) {
+  function rankingController($firebaseArray, _, UtilsService, FirebaseRef, LoadingService) {
     const vm = this;
 
     vm.total = 0;
@@ -17,16 +17,15 @@
     vm.mapObject = {
       scope: 'usa',
       options: {
-        width: 800,
+        width: 1000,
         legendHeight: 10,
         labelSize: 10,
+        responsive: true,
+        staticGeoData: true,
         labels: {
           IL: 100
         }
       },
-      zoomable: true,
-      responsive: true,
-      staticGeoData: true,
       geographyConfig: {
         highlightFillColor: '#FF4081',
         highlighBorderColor: '#3F51B5',
@@ -51,6 +50,8 @@
     };
 
     function $onInit() {
+      LoadingService.start();
+
       const ref = FirebaseRef.invoices.orderByChild('status').equalTo('paid');
 
       vm.invoices = $firebaseArray(ref);
@@ -58,6 +59,7 @@
       vm.invoices.$loaded()
         .then(_init)
         .then(() => {
+          LoadingService.stop();
           vm.invoices.$watch(invoice => _invoiceAdd(invoice));
         });
     }

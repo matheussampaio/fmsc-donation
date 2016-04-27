@@ -10,12 +10,12 @@
       }
     });
 
-  function donateController(UtilsService, InvoicesService, FMSCDebug) {
+  function donateController(UtilsService, InvoicesService, FMSCDebug, LoadingService) {
     const vm = this;
 
     vm.debugMode = FMSCDebug;
     vm.data = {};
-    vm.loading = false;
+    vm.LoadingService = LoadingService;
     vm.states = UtilsService.statesNames;
 
     vm.checkout = checkout;
@@ -30,8 +30,8 @@
     }
 
     function checkout() {
-      if (!vm.loading && vm.data.quantity && vm.data.name && vm.data.state) {
-        vm.loading = true;
+      if (!vm.LoadingService.isLoading() && vm.data.quantity && vm.data.name && vm.data.state) {
+        LoadingService.start();
 
         InvoicesService.create({
           state: vm.data.state,

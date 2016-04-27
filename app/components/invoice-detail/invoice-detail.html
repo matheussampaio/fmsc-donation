@@ -1,0 +1,15 @@
+<md-card>
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Invoice - {{ $ctrl.invoice.$id }}</span>
+    </md-card-title-text>
+  </md-card-title>
+
+  <md-card-content>
+     <p>Name: {{ $ctrl.invoice.name }}</p>
+     <p>State: {{ $ctrl.invoice.state }}</p>
+     <p>Quantity: {{ $ctrl.invoice.quantity }}</p>
+     <p>Status: {{ $ctrl.invoice.status }}</p>
+     <p>Created: {{ $ctrl.invoice.created | date:'yyyy-MM-dd HH:mm:ss' }}</p>
+   </md-card-content>
+</md-card>

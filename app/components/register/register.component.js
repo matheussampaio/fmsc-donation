@@ -7,7 +7,7 @@
       templateUrl: 'register/register.html'
     });
 
-  function registerController($state, $log, UtilsService, AuthService) {
+  function registerController($state, $log, UtilsService, AuthService, LoadingService) {
     const vm = this;
 
     vm.loading = false;
@@ -41,6 +41,7 @@
 
       } else if (!vm.loading) {
         vm.loading = true;
+        LoadingService.start();
         AuthService.createUser(vm.data)
           .then(() => {
             $state.go('app.home');
@@ -54,6 +55,7 @@
               vm.error.show = error.code;
             }
 
+            LoadingService.stop();
             vm.loading = false;
           });
       }

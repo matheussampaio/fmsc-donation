@@ -7,7 +7,7 @@
       templateUrl: 'login/login.html'
     });
 
-  function loginController($state, $log, AuthService) {
+  function loginController($state, $log, AuthService, LoadingService) {
     const vm = this;
 
     vm.loading = false;
@@ -31,6 +31,7 @@
 
     function login() {
       if (!vm.loading) {
+        LoadingService.start();
         vm.loading = true;
 
         AuthService.login(vm.data)
@@ -38,6 +39,7 @@
             $state.go($state.params.from);
           }).catch((error) => {
             vm.error.show = error.code;
+            LoadingService.stop();
             vm.loading = false;
           });
       }

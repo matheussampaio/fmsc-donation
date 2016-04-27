@@ -1,5 +1,3 @@
-<md-progress-linear ng-if="$ctrl.loading" md-mode="indeterminate"></md-progress-linear>
-
 <div layout="row" layout-align="center" layout-margin layout-padding>
   <md-card class="animated fadeIn" flex="100" flex-gt-xs="50">
     <md-card-title>
@@ -14,7 +12,7 @@
         <div layout="column" class="input-row">
           <md-input-container>
             <label>Quantity</label>
-            <input type="number" name="quantity" ng-readonly="$ctrl.loading" ng-model="$ctrl.data.quantity" min="1" required>
+            <input type="number" name="quantity" ng-readonly="$ctrl.LoadingService.isLoading()" ng-model="$ctrl.data.quantity" min="1" required>
             <div class="hint" ng-show="$ctrl.data.quantity">{{ $ctrl.data.quantity * 25 }} meals, $0.22 each</div>
             <div ng-messages="donate.quantity.$error">
               <div ng-message="required">This is required!</div>
@@ -24,7 +22,7 @@
 
           <md-input-container>
             <label>Name</label>
-            <input type="text" name="name" ng-readonly="$ctrl.loading" ng-model="$ctrl.data.name" minlength="4" md-maxlength="30" required>
+            <input type="text" name="name" ng-readonly="$ctrl.LoadingService.isLoading()" ng-model="$ctrl.data.name" minlength="4" md-maxlength="30" required>
             <div ng-messages="donate.name.$error">
               <div ng-message="required">This is required!</div>
               <div ng-message="md-maxlength">That's too long!</div>
@@ -34,7 +32,7 @@
 
           <md-input-container>
             <label>State</label>
-            <md-select ng-readonly="$ctrl.loading" ng-model="$ctrl.data.state" required>
+            <md-select ng-readonly="$ctrl.LoadingService.isLoading()" ng-model="$ctrl.data.state" required>
               <md-option ng-repeat="state in $ctrl.states" value="{{state}}">
                 {{state}}
               </md-option>
@@ -46,7 +44,7 @@
 
           <md-card-actions layout="column" layout-align="center end">
             <p class="md-body-2" ng-show="$ctrl.data.quantity">Total: {{ $ctrl.data.quantity * 25 * 0.22 | currency }}</p>
-            <md-button class="md-accent md-raised" ng-click="$ctrl.checkout()" ng-disabled="donate.$invalid || $ctrl.loading">Checkout</md-button>
+            <md-button class="md-accent md-raised" ng-click="$ctrl.checkout()" ng-disabled="donate.$invalid || $ctrl.LoadingService.isLoading()">Checkout</md-button>
           </md-card-actions>
 
           <!-- Heroku Debug -->
