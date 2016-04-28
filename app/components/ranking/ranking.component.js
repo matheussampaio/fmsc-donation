@@ -33,8 +33,8 @@
         highlighBorderWidth: 2,
         popupTemplate: (geography, data) => {
           return `<div class="hoverinfo"><span class="statename">${geography.properties.name}</span>
-                    </br>Donations: ${data.numberOfThings}
-                  </div>`;
+              </br>${data.quantity * 25} (${data.quantity * 100 / vm.total}%) meals donates.
+            </div>`;
         }
       },
       fills: {
@@ -68,7 +68,7 @@
       // Initiate data with states
       UtilsService.statesShort.forEach(state => {
         vm.mapObject.data[state] = {
-          numberOfThings: 0,
+          quantity: 0,
           fillKey: '0'
         };
       });
@@ -83,8 +83,10 @@
     function _updateColors() {
       UtilsService.statesShort.forEach(stateAbbr => {
         const state = vm.mapObject.data[stateAbbr];
-        if (state.numberOfThings > 0) {
-          state.fillKey = _getColor(state.numberOfThings / vm.total);
+        if (state.quantity > 0) {
+          state.fillKey = _getColor(state.quantity / vm.total);
+
+          console.log(state, vm.total, state.quantity / vm.total);
         }
       });
     }
@@ -100,11 +102,11 @@
       const state = UtilsService.getStateAbbrFromName(invoice.state);
 
       vm.total += invoice.quantity;
-      vm.mapObject.data[state].numberOfThings += invoice.quantity;
+      vm.mapObject.data[state].quantity += invoice.quantity;
     }
 
     function _getColor(num) {
-      if (num <= 0) {
+      if (num <= 0.0) {
         return '0';
       } else if (num < 0.2) {
         return '1';
@@ -114,11 +116,9 @@
         return '3';
       } else if (num < 0.8) {
         return '4';
-      } else if (num < 1) {
-        return '5';
       }
 
-      return '0';
+      return '5';
     }
   }
 
