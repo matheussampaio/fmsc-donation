@@ -32,8 +32,9 @@
         highlightBorderOpacity: 1,
         highlighBorderWidth: 2,
         popupTemplate: (geography, data) => {
+          const percentage = (data.quantity * 100 / vm.total).toFixed(2);
           return `<div class="hoverinfo"><span class="statename">${geography.properties.name}</span>
-              </br>${data.quantity * 25} (${data.quantity * 100 / vm.total}%) meals donates.
+              </br>${data.quantity * 25} (${percentage}%) meals donates.
             </div>`;
         }
       },
