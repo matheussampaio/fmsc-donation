@@ -40,7 +40,9 @@
           </div>
       </md-card-content>
 
-      <md-card-actions layout="row" layout-align="end center">
+      <md-card-actions layout="row" layout-align="center">
+        <md-button type="submit" class="md-raised md-primary" ui-sref="app.register">Register</md-button>
+        <div flex></div>
         <md-button type="submit" class="md-primary" ng-click="$ctrl.login()" ng-disabled="login.$invalid || $ctrl.loading">Login</md-button>
       </md-card-actions>
     </form>
