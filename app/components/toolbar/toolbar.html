@@ -1,48 +1,53 @@
 <md-content md-padding layout="column">
-  <md-toolbar class="md-toolbar-tools" layout="row">
-    <h2>FMSC</h2>
+  <md-toolbar class="md-toolbar-tools" layout="row" layout-align="center center">
+      <div flex layout="row" layout-align="start center">
+        <div>FMSC</div>
 
-    <!-- Left Side -->
-    <md-button ui-sref-active="active" ui-sref="app.home">Home</md-button>
-    <md-button ui-sref-active="active" ui-sref="app.ranking">Ranking</md-button>
-    <md-button ui-sref-active="active" ui-sref="app.donate">Donate</md-button>
-    <md-button ui-sref-active="active" ui-sref="app.about">About</md-button>
+        <!-- Left Side -->
+        <md-button ui-sref-active="active" ui-sref="app.home">Home</md-button>
+        <md-button ui-sref-active="active" ui-sref="app.ranking">Ranking</md-button>
+        <md-button ui-sref-active="active" ui-sref="app.about">About</md-button>
+      </div>
 
-    <span flex></span>
+      <div>
+        <md-button class="md-raised md-accent" ui-sref-active="active" ui-sref="app.donate">Donate</md-button>
+      </div>
 
-    <!-- Right Side -->
-    <md-button ui-sref-active="active" ui-sref="app.login" ng-if="!$ctrl.auth.user">Login</md-button>
-    <md-button ui-sref-active="active" ui-sref="app.register" ng-if="!$ctrl.auth.user">Register</md-button>
+      <!-- Right Side -->
+      <div flex layout layout-align="end center">
+        <md-button ui-sref-active="active" ui-sref="app.login" ng-if="!$ctrl.auth.user">Login</md-button>
+        <md-button ui-sref-active="active" ui-sref="app.register" ng-if="!$ctrl.auth.user">Register</md-button>
 
-    <md-fab-speed-dial ng-if="$ctrl.auth.user" md-open="$ctrl.isOpen" ng-mouseenter="$ctrl.isOpen = true"
-      ng-mouseleave="$ctrl.isOpen = false" md-direction="left" class="md-scale">
-      <md-fab-trigger>
-        <md-button aria-label="Settings" class="md-fab md-raised md-mini">
-          <md-icon class="icon icon-cog"></md-icon>
-        </md-button>
-      </md-fab-trigger>
-      <md-fab-actions>
-        <md-button aria-label="Profile" class="md-fab md-raised md-mini"
-          ui-sref-active="active" ui-sref="app.profile">
-          <md-tooltip md-direction="down">
-            Profile
-          </md-tooltip>
-          <md-icon class="icon icon-user"></md-icon>
-        </md-button>
-        <md-button aria-label="Invoices" class="md-fab md-raised md-mini"
-          ui-sref-active="active" ui-sref="app.invoices">
-          <md-tooltip md-direction="down">
-            Invoices
-          </md-tooltip>
-          <md-icon class="icon icon-coin-dollar"></md-icon>
-        </md-button>
-        <md-button aria-label="Logout" ng-click="$ctrl.logout()" class="md-fab md-raised md-mini">
-          <md-tooltip md-direction="down">
-            Logout
-          </md-tooltip>
-          <md-icon class="icon icon-exit"></md-icon>
-        </md-button>
-      </md-fab-actions>
-    </md-fab-speed-dial>
+        <md-fab-speed-dial ng-if="$ctrl.auth.user" md-open="$ctrl.isOpen" ng-mouseenter="$ctrl.isOpen = true"
+          ng-mouseleave="$ctrl.isOpen = false" md-direction="left" class="md-scale">
+          <md-fab-trigger>
+            <md-button aria-label="Settings" class="md-fab md-raised md-mini">
+              <md-icon class="icon icon-cog"></md-icon>
+            </md-button>
+          </md-fab-trigger>
+          <md-fab-actions>
+            <md-button aria-label="Profile" class="md-fab md-raised md-mini"
+              ui-sref-active="active" ui-sref="app.profile">
+              <md-tooltip md-direction="down">
+                Profile
+              </md-tooltip>
+              <md-icon class="icon icon-user"></md-icon>
+            </md-button>
+            <md-button aria-label="Invoices" class="md-fab md-raised md-mini"
+              ui-sref-active="active" ui-sref="app.invoices">
+              <md-tooltip md-direction="down">
+                Invoices
+              </md-tooltip>
+              <md-icon class="icon icon-coin-dollar"></md-icon>
+            </md-button>
+            <md-button aria-label="Logout" ng-click="$ctrl.logout()" class="md-fab md-raised md-mini">
+              <md-tooltip md-direction="down">
+                Logout
+              </md-tooltip>
+              <md-icon class="icon icon-exit"></md-icon>
+            </md-button>
+          </md-fab-actions>
+        </md-fab-speed-dial>
+      </div>
   </md-toolbar>
 </md-content>
