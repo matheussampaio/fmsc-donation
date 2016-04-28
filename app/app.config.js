@@ -116,6 +116,22 @@
       template: '<about></about>'
     };
 
+    const resetPasswordState = {
+      url: 'reset',
+      data: {
+        publicOnly: true
+      },
+      template: '<reset-password></reset-password>'
+    };
+
+    const changePasswordState = {
+      url: 'change',
+      data: {
+        private: true
+      },
+      template: '<change-password></change-password>'
+    };
+
     $stateProvider
       .state('app', appState)
         .state('app.home', homeState)
@@ -126,6 +142,8 @@
         .state('app.login', loginState)
         .state('app.register', registerState)
         .state('app.about', aboutState)
+        .state('app.reset', resetPasswordState)
+        .state('app.change', changePasswordState)
         .state('app.ranking', rankingState);
 
     // if none of the above states are matched, use this as the fallback

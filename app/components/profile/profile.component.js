@@ -14,6 +14,8 @@
     const vm = this;
 
     vm.data = null;
+    vm.updating = false;
+
     vm.LoadingService = LoadingService;
     vm.states = UtilsService.statesNames;
     vm.update = update;

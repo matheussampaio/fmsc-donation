@@ -17,10 +17,8 @@
         const canvas = $element[0].children[0];
 
         ImageService.getFilename().then((filename) => {
-          $log.debug(`filename: ${filename}`);
           image.src = `assets/images/${filename}`;
           image.onload = () => {
-            $log.debug('image onload');
             $scope.drawCanvas = DrawCanvas.create(canvas, image);
 
             ImageService.register({

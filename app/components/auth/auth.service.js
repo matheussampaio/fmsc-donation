@@ -14,7 +14,9 @@
       logout,
       createUser,
       isAuthenticated,
-      update
+      update,
+      resetPassword,
+      changePassword
     };
 
     activate();
@@ -94,6 +96,18 @@
 
     function isAuthenticated() {
       return _auth.$getAuth() !== null;
+    }
+
+    function resetPassword({ email }) {
+      return _auth.$resetPassword({ email });
+    }
+
+    function changePassword({ oldPassword, newPassword }) {
+      return _auth.$changePassword({
+        email: service.user.email,
+        oldPassword,
+        newPassword
+      });
     }
 
   }

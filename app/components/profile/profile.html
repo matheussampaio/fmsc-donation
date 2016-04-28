@@ -33,12 +33,18 @@
         </div>
       </md-card-content>
 
-      <md-card-actions layout="row" layout-align="end center">
-        <md-button class="md-raised md-accent" ng-click="$ctrl.cancel()" ng-show="$ctrl.updating" ng-disabled="$ctrl.LoadingService.isLoading()">
+      <md-card-actions layout="row" layout-align="center">
+        <md-button class="animated fadeIn md-accent" ui-sref="app.change" ng-disabled="$ctrl.LoadingService.isLoading()">
+          Change Password
+        </md-button>
+
+        <div flex></div>
+
+        <md-button class="animated fadeIn md-raised md-accent" ng-click="$ctrl.cancel()" ng-show="$ctrl.updating" ng-disabled="$ctrl.LoadingService.isLoading()">
           Cancel
         </md-button>
 
-        <md-button class="md-raised md-primary" ng-click="$ctrl.save()" ng-show="$ctrl.updating" ng-disabled="update.$invalid || $ctrl.LoadingService.isLoading()">
+        <md-button class="animated fadeIn md-raised md-primary" ng-click="$ctrl.save()" ng-show="$ctrl.updating" ng-disabled="update.$invalid || $ctrl.LoadingService.isLoading()">
           Save
         </md-button>
       </md-card-actions>

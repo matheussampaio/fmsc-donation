@@ -35,9 +35,13 @@
         vm.loading = true;
 
         AuthService.login(vm.data)
-          .then(() => {
+          .then((authData) => {
             LoadingService.stop();
-            $state.go($state.params.from);
+            if (authData.password.isTemporaryPassword) {
+              $state.go('app.change');
+            } else {
+              $state.go($state.params.from);
+            }
           }).catch((error) => {
             vm.error.show = error.code;
             LoadingService.stop();
