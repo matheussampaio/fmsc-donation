@@ -4,16 +4,17 @@
     .module('fmsc')
     .service('AuthService', AuthService);
 
-  function AuthService($q, $log, FirebaseRef) {
+  function AuthService($q, $log, $firebaseObject, FirebaseRef) {
     const _auth = FirebaseRef.auth;
 
     const service = {
-      user: _auth.$getAuth(),
+      user: null,
       getUser,
       login,
       logout,
       createUser,
-      isAuthenticated
+      isAuthenticated,
+      update
     };
 
     activate();
@@ -23,37 +24,30 @@
     ///////////////////
 
     function activate() {
-      _auth.$onAuth(() => {
-        getUser()
-          .then(user => {
-            service.user = user;
-          })
-          .catch(() => {
-            service.user = null;
-          });
-      });
+      loadUser();
+
+      _auth.$onAuth(loadUser);
     }
 
-    function getUser() {
+    function loadUser() {
       const auth = _auth.$getAuth();
 
       if (auth === null) {
+        service.user = null;
         return $q.reject();
       }
 
-      return $q((resolve, reject) => {
-        FirebaseRef.root.child(`users/${auth.uid}`).once('value').then(snapshot => {
-          if (!snapshot) {
-            return reject();
-          }
+      service.user = $firebaseObject(FirebaseRef.root.child(`users/${auth.uid}`));
 
-          const user = snapshot.val();
-          user.uid = auth.uid;
-          user.email = auth.password.email;
+      return service.user.$loaded();
+    }
 
-          return resolve(user);
-        });
-      });
+    function getUser() {
+      if (!service.user) {
+        return loadUser().then(() => service.user);
+      }
+
+      return service.user.$loaded().then(() => service.user);
     }
 
     function login({ email, password, remember }) {
@@ -67,6 +61,7 @@
 
     function logout() {
       _auth.$unauth();
+      service.user = null;
     }
 
     function createUser({ email, password, name, state }) {
@@ -78,7 +73,9 @@
         return FirebaseRef.root.child('users').child(user.uid).set({
           provider: 'password',
           name,
-          state
+          state,
+          uid: user.uid,
+          email
         });
       })
       .then(() => {
@@ -86,6 +83,13 @@
 
         return login({ email, password });
       });
+    }
+
+    function update({ name, state }) {
+      service.user.name = name;
+      service.user.state = state;
+
+      return service.user.$save();
     }
 
     function isAuthenticated() {

@@ -7,7 +7,7 @@
       templateUrl: 'invoices/invoices.html'
     });
 
-  function invoicesController(InvoicesService, LoadingService) {
+  function invoicesController(InvoicesService, AuthService, LoadingService) {
     const vm = this;
 
     vm.LoadingService = LoadingService;
@@ -19,11 +19,13 @@
     function $onInit() {
       LoadingService.start();
 
-      vm.invoices = InvoicesService.getAllFromUser();
+      AuthService.getUser().then(user => {
+        vm.invoices = InvoicesService.getAllFromUser(user.uid);
 
-      vm.invoices.$loaded().then(() => {
-        LoadingService.stop();
-        vm.loading = false;
+        vm.invoices.$loaded().then(() => {
+          LoadingService.stop();
+          vm.loading = false;
+        });
       });
     }
 

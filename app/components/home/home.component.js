@@ -7,7 +7,8 @@
       templateUrl: 'home/home.html'
     });
 
-  function homeController() {
+  function homeController(LoadingService) {
+    LoadingService.stop();
   }
 
 })();

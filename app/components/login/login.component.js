@@ -36,6 +36,7 @@
 
         AuthService.login(vm.data)
           .then(() => {
+            LoadingService.stop();
             $state.go($state.params.from);
           }).catch((error) => {
             vm.error.show = error.code;

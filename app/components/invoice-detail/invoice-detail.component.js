@@ -11,7 +11,7 @@
     });
 
   function invoiceDetailController() {
-    console.log('teste', this.invoice);
+    // console.log('teste', this.invoice);
   }
 
 })();

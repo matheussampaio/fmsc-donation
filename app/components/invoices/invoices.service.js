@@ -33,12 +33,6 @@
     }
 
     function getAllFromUser(userId) {
-      if (!userId) {
-        userId = AuthService.user.uid;
-      }
-
-      console.log(AuthService.user);
-
       return $firebaseArray(FirebaseRef.invoices.orderByChild('user').equalTo(userId));
     }
 

@@ -3,15 +3,15 @@
     <h2>FMSC</h2>
 
     <!-- Left Side -->
-    <md-button hide-xs ui-sref-active="active" ui-sref="app.home">Home</md-button>
-    <md-button hide-xs ui-sref-active="active" ui-sref="app.ranking">Ranking</md-button>
-    <md-button hide-xs ui-sref-active="active" ui-sref="app.about">About</md-button>
+    <md-button ui-sref-active="active" ui-sref="app.home">Home</md-button>
+    <md-button ui-sref-active="active" ui-sref="app.ranking">Ranking</md-button>
+    <md-button ui-sref-active="active" ui-sref="app.about">About</md-button>
 
     <span flex></span>
 
     <!-- Right Side -->
-    <md-button hide-xs ui-sref-active="active" ui-sref="app.login" ng-if="!$ctrl.auth.user">Login</md-button>
-    <md-button hide-xs ui-sref-active="active" ui-sref="app.register" ng-if="!$ctrl.auth.user">Register</md-button>
+    <md-button ui-sref-active="active" ui-sref="app.login" ng-if="!$ctrl.auth.user">Login</md-button>
+    <md-button ui-sref-active="active" ui-sref="app.register" ng-if="!$ctrl.auth.user">Register</md-button>
 
     <md-fab-speed-dial ng-if="$ctrl.auth.user" md-open="$ctrl.isOpen" ng-mouseenter="$ctrl.isOpen = true"
       ng-mouseleave="$ctrl.isOpen = false" md-direction="left" class="md-scale">

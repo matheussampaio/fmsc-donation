@@ -53,16 +53,9 @@
 
     const profileState = {
       url: 'profile',
-      template: '<profile user="user"></profile>',
+      template: '<profile></profile>',
       data: {
         private: true
-      },
-      resolve: {
-        user: (AuthService) => AuthService.getUser()
-      },
-      /* @ngInject */
-      controller: ($scope, user) => {
-        $scope.user = user;
       }
     };
 
