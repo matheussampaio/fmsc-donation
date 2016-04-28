@@ -50,10 +50,7 @@
           const pieceY = Math.floor(mouseY / 5);
 
           TooltipService.setMessage(pieceX, pieceY);
-
-          // X: minus 8 equals to margin
-          // Y: minus 72 equals to margin and toolbar height
-          TooltipService.setPosition(e.pageX - 8, e.pageY - 72);
+          TooltipService.setPosition(e.pageX, e.pageY);
         }
 
         function hideBuyer() {
