@@ -22,7 +22,7 @@
 
           <md-input-container>
             <label>Name</label>
-            <input type="text" name="name" ng-readonly="$ctrl.LoadingService.isLoading()" ng-model="$ctrl.data.name" minlength="4" md-maxlength="30" required>
+            <input type="text" name="name" ng-readonly="$ctrl.LoadingService.isLoading()" ng-model="$ctrl.data.name" ng-change="$ctrl.checkNsfw()" ng-blur="$ctrl.checkNsfw(false)" id="inputName" minlength="4" md-maxlength="30" required>
             <div ng-messages="donate.name.$error">
               <div ng-message="required">This is required!</div>
               <div ng-message="md-maxlength">That's too long!</div>

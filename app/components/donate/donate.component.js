@@ -18,8 +18,9 @@
     vm.LoadingService = LoadingService;
     vm.states = UtilsService.statesNames;
 
-    vm.checkout = checkout;
     vm.$onInit = $onInit;
+    vm.checkout = checkout;
+    vm.checkNsfw = checkNsfw;
 
     ////////////////
 
@@ -42,6 +43,12 @@
           angular.element(document).find('#invoiceKey').val(invoice.key());
           angular.element(document).find('#formDonate').submit();
         });
+      }
+    }
+
+    function checkNsfw(includeSpace = true) {
+      if (vm.data.name) {
+        vm.data.name = UtilsService.removeNsfwWords(vm.data.name, includeSpace);
       }
     }
   }
