@@ -1,3 +1,5 @@
+'use strict';
+
 const del = require('del');
 const path = require('path');
 const gulp = require('gulp');
@@ -194,9 +196,33 @@ gulp.task('debug', ['build'], () => {
   gulp.watch('app/index.html', ['build:inject']);
 });
 
-gulp.task('serve', ['debug'], () => {
-  browserSync.init({
-    server: './www'
+gulp.task('nodemon', ['debug'], (cb) => {
+  let started = false;
+
+  return plugins.nodemon({
+    script: 'dist/server.js',
+    watch: [
+      'dist'
+    ],
+    ext: 'js json'
+  }).on('start', () => {
+    // to avoid nodemon being started multiple times
+    // thanks @matthisk
+    if (!started) {
+      cb();
+      started = true;
+    }
+  });
+});
+
+gulp.task('serve', ['nodemon'], () => {
+  browserSync.init(null, {
+    proxy: 'http://localhost:3000',
+    files: ['www'],
+    browser: 'google chrome',
+    port: 3001,
+    scrollProportionally: false,
+    reloadDebounce: 2000
   });
 });
 
