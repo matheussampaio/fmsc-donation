@@ -1,5 +1,5 @@
 <div layout="row" layout-align="center" layout-margin layout-padding>
-  <md-card class="animated fadeIn" flex="100" flex-gt-xs="50">
+  <md-card class="animated fadeIn" flex="100" flex-gt-xs="50" ng-if="$ctrl.ImageService.available">
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">Donate</span>
@@ -10,15 +10,23 @@
       <form name="donate" method="post" target="_top" id="formDonate"
             action="https://www.sandbox.paypal.com/cgi-bin/webscr">
         <div layout="column" class="input-row">
-          <md-input-container>
-            <label>Quantity</label>
-            <input type="number" name="quantity" ng-readonly="$ctrl.LoadingService.isLoading()" ng-model="$ctrl.data.quantity" min="1" required>
-            <div class="hint" ng-show="$ctrl.data.quantity">{{ $ctrl.data.quantity * 25 }} meals, $0.22 each</div>
-            <div ng-messages="donate.quantity.$error">
-              <div ng-message="required">This is required!</div>
-              <div ng-message="min">You should donate at least one.</div>
+
+          <div layout="row">
+            <md-input-container flex>
+              <label>Quantity (max {{$ctrl.ImageService.available.length}})</label>
+              <input type="number" name="quantity" ng-readonly="$ctrl.LoadingService.isLoading()" ng-model="$ctrl.data.quantity" min="1" max="{{$ctrl.ImageService.available.length}}" required>
+              <div class="hint" ng-show="$ctrl.data.quantity">{{ $ctrl.data.quantity * 25 }} meals, $0.22 each</div>
+              <div ng-messages="donate.quantity.$error">
+                <div ng-message="required">This is required!</div>
+                <div ng-message="min">You should donate at least one.</div>
+                <div ng-message="max">You can't donate more then {{$ctrl.ImageService.available.length}}.</div>
+              </div>
+            </md-input-container>
+
+            <div>
+              <md-button flex class="md-accent md-raised" ng-click="$ctrl.data.quantity = $ctrl.ImageService.available.length" ng-disabled="$ctrl.LoadingService.isLoading()">Buy Everything</md-button>
             </div>
-          </md-input-container>
+          </div>
 
           <md-input-container>
             <label>Name</label>

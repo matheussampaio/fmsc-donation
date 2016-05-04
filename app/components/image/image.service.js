@@ -9,6 +9,7 @@
       imageId: null,
       filename: null,
       sold: null,
+      available: null,
 
       eventsCallback: {
 
@@ -16,6 +17,8 @@
 
       getCurrentImageId,
       getFilename,
+
+      getAvaiable,
 
       getSold,
       destroySold,
@@ -65,6 +68,25 @@
 
           return service.filename;
         });
+    }
+
+    function getAvaiable() {
+      if (service.available) {
+        return $q.resolve(service.available);
+      } else if (service.loadingAvailable) {
+        return service.loadingAvailable;
+      }
+
+      service.loadingAvailable = _initResource('pieces_available').then((ref) => {
+        return ref.$loaded().then(() => {
+          service.available = ref;
+          service.available.$watch(event => _eventHandler('available', event));
+          service.loadingAvailable = null;
+          return service.available;
+        });
+      });
+
+      return service.loadingAvailable;
     }
 
     function getSold() {

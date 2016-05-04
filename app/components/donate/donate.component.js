@@ -10,7 +10,8 @@
       }
     });
 
-  function donateController(UtilsService, InvoicesService, FMSCDebug, LoadingService) {
+  function donateController(UtilsService, InvoicesService, FMSCDebug, LoadingService,
+    ImageService) {
     const vm = this;
 
     vm.debugMode = FMSCDebug;
@@ -21,13 +22,22 @@
     vm.$onInit = $onInit;
     vm.checkout = checkout;
     vm.checkNsfw = checkNsfw;
+    vm.ImageService = ImageService;
 
     ////////////////
 
     function $onInit() {
+      LoadingService.start();
+
       vm.data.quantity = 1;
       vm.data.name = vm.user.name;
       vm.data.state = vm.user.state;
+
+      ImageService.getAvaiable().then(() => {
+        LoadingService.stop();
+
+        console.log(ImageService.available.length);
+      });
     }
 
     function checkout() {
